@@ -43,6 +43,7 @@
   </compiler>
   <applications>
     <application path="lobby.mxml"/>
+    <application path="com/soueidan/games/lobby/core/App.as"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
