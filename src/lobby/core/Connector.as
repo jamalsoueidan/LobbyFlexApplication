@@ -82,7 +82,7 @@ package lobby.core
 			
 			var params:ISFSObject = new SFSObject();
 			params.putUtfString("session", _parameters.session);
-			params.putUtfString("room", _parameters.room);
+			params.putUtfString("room", "lobby");
 			
 			var request:IRequest = new LoginRequest("","",_xml.zone, params);
 			send(request);

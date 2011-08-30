@@ -52,6 +52,7 @@ package lobby.core
 			}			
 			
 			if ( !_urlLoader ) {
+				trace("load xml file");
 				_urlLoader = new URLLoader();
 				_urlLoader.addEventListener(Event.COMPLETE, configurationFileReady);
 				_urlLoader.load(new URLRequest(_parameters.config));
@@ -60,6 +61,7 @@ package lobby.core
 		
 		private function configurationFileReady(event:Event):void
 		{
+			trace("setup configuration");
 			_server = ConnectManager.getInstance();
 			_server.parameters = _parameters;
 			_server.addEventListener(SFSEvent.ROOM_JOIN, roomJoined);
@@ -70,6 +72,7 @@ package lobby.core
 		
 		private function roomJoined(evt:SFSEvent):void
 		{	
+			trace("room joined");
 			addElement(_entrance);
 			_server.removeEventListener(SFSEvent.ROOM_JOIN, roomJoined);
 		}
