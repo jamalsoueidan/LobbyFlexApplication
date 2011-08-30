@@ -3,7 +3,9 @@ package lobby.core
 	import com.smartfoxserver.v2.core.SFSEvent;
 	import com.smartfoxserver.v2.entities.Room;
 	import com.smartfoxserver.v2.entities.SFSUser;
+	import com.smartfoxserver.v2.entities.data.ISFSArray;
 	import com.smartfoxserver.v2.entities.data.ISFSObject;
+	import com.smartfoxserver.v2.entities.data.SFSArray;
 	import com.smartfoxserver.v2.entities.data.SFSObject;
 	import com.smartfoxserver.v2.entities.invitation.InvitationReply;
 	import com.smartfoxserver.v2.exceptions.SFSError;
@@ -17,11 +19,13 @@ package lobby.core
 	import flash.events.Event;
 	import flash.external.ExternalInterface;
 	import flash.net.SharedObject;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	
 	import lobby.components.*;
-	import lobby.components.login.*;
 	import lobby.events.*;
 	import lobby.managers.*;
+	import lobby.responses.CreateRoomResponse;
 	
 	import mx.events.FlexEvent;
 	
@@ -30,37 +34,44 @@ package lobby.core
 
 	public class App extends Application
 	{
-		public static var _instance:App;
-		
 		private var _entrance:Entrance;
 		
 		private var _server:Connector;
+		private var _parameters:Object;
 		
-		public static function getInstance():App {
-			return _instance;
-		}
+		private var _urlLoader:URLLoader;
 		
 		override protected function createChildren():void {
 			super.createChildren();
 			
+			ApplicationManager.setInstance(this);
+			_parameters = systemManager.loaderInfo.parameters
+				
 			if ( !_entrance ) {
 				_entrance = new Entrance();
 			}			
 			
+			if ( !_urlLoader ) {
+				_urlLoader = new URLLoader();
+				_urlLoader.addEventListener(Event.COMPLETE, configurationFileReady);
+				_urlLoader.load(new URLRequest(_parameters.config));
+			}
+		}
+		
+		private function configurationFileReady(event:Event):void
+		{
 			_server = ConnectManager.getInstance();
-			
-			_server.setup(systemManager.loaderInfo.parameters);
+			_server.parameters = _parameters;
 			_server.addEventListener(SFSEvent.ROOM_JOIN, roomJoined);
-			_server.addEventListener(SFSEvent.EXTENSION_RESPONSE, extensionResponse);
+			_server.addEventListener(SFSEvent.INVITATION_REPLY, invitationReply);
+			_server.addResponseHandler(CreateRoomResponse.CREATE_ROOM, CreateRoomResponse);
+			_server.start(_urlLoader.data);
 		}
 		
 		private function roomJoined(evt:SFSEvent):void
 		{	
-			_server.removeEventListener(SFSEvent.ROOM_JOIN, roomJoined);
-			
 			addElement(_entrance);
-			
-			_server.addEventListener(SFSEvent.INVITATION_REPLY, invitationReply);
+			_server.removeEventListener(SFSEvent.ROOM_JOIN, roomJoined);
 		}
 		
 		protected function invitationReply(event:SFSEvent):void
@@ -70,34 +81,17 @@ package lobby.core
 			}
 						
 			var params:ISFSObject = new SFSObject();
-			params.putUtfString("invitee", event.params.invitee.name); 
 			
-			var extensionRequest:ExtensionRequest = new ExtensionRequest(ExtensionResponse.CREATE_CUSTOM_ROOM, params);
+			// set all players
+			var users:ISFSArray = new SFSArray();
+			users.addInt(event.params.invitee.id);
+			params.putSFSArray("users", users);
+			
+			// set game id
+			params.putInt("game_id", _server.gameId);
+			
+			var extensionRequest:ExtensionRequest = new ExtensionRequest(CreateRoomResponse.CREATE_ROOM, params);
 			_server.send(extensionRequest);
-		}
-		
-		protected function extensionResponse(event:SFSEvent):void
-		{
-			var action:String = event.params.cmd;
-			var object:SFSObject = event.params.params as SFSObject;
-	
-			trace(action);
-			
-			switch(action)
-			{
-				case ExtensionResponse.CREATE_CUSTOM_ROOM:
-				{
-					_server.disconnect();
-					ExternalInterface.call("redirectToGame");
-					break;
-				}
-				
-				default:
-				{
-					break;
-				}
-			}
-		}
-		
+		}		
 	}
 }

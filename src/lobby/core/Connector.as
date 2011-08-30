@@ -27,13 +27,23 @@ package lobby.core
 	{
 		private var _parameters:Object;
 		private var _responseHandlers:Object = {};
+		private var _xml:XML;
 		
-		public function setup(params:Object):void {
+		public function set parameters(value:Object):void {
+			_parameters = value;
+		}
+		
+		public function get gameId():int {
+			return _xml.id;
+		}
+		
+		public function start(xmlData:String):void {
 			addEventListener(SFSEvent.CONNECTION, connection);
 			addEventListener(SFSEvent.EXTENSION_RESPONSE, responseHandler);
 			
-			_parameters = params;
-			loadConfig(_parameters.config);
+			_xml = new XML(xmlData);
+			
+			connect(_xml.host, _xml.port);
 		}
 		
 		private function responseHandler(event:SFSEvent):void {
@@ -74,7 +84,7 @@ package lobby.core
 			params.putUtfString("session", _parameters.session);
 			params.putUtfString("room", _parameters.room);
 			
-			var request:IRequest = new LoginRequest("","","", params);
+			var request:IRequest = new LoginRequest("","",_xml.zone, params);
 			send(request);
 		}	
 	}

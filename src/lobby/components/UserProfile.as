@@ -52,12 +52,7 @@ package lobby.components
 				_sfsUserChanged = false;
 				
 				_userNickname.text = _sfsUser.name;
-				
-				if ( UserManager.isRegistered(_sfsUser) ) {
-					_userRegistered.text = "Registered";	
-				} else {
-					_userRegistered.text = "Guest";
-				}
+				_userRegistered.text = UserManager.privilege(_sfsUser);	
 			}
 			
 			if ( _sfsObjectChanged ) {
