@@ -4,7 +4,6 @@ package lobby.components
 	import com.smartfoxserver.v2.entities.data.ISFSObject;
 	import com.smartfoxserver.v2.entities.data.SFSObject;
 	
-	import lobby.core.User;
 	import lobby.managers.UserManager;
 	
 	import spark.components.Label;

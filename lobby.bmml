@@ -663,7 +663,7 @@
         <text>Games%2C%20Chat</text>
       </controlProperties>
     </control>
-    <control controlID="284" controlTypeID="__group__" x="1919" y="594" w="466" h="70" measuredW="486" measuredH="90" zOrder="73" locked="false" isInGroup="-1">
+    <control controlID="284" controlTypeID="__group__" x="1919" y="594" w="466" h="70" measuredW="466" measuredH="70" zOrder="73" locked="false" isInGroup="-1">
       <groupChildrenDescriptors>
         <control controlID="3" controlTypeID="com.balsamiq.mockups::Title" x="200" y="4" w="-1" h="-1" measuredW="62" measuredH="50" zOrder="0" locked="false" isInGroup="284">
           <controlProperties>
@@ -2548,6 +2548,26 @@
     <control controlID="509" controlTypeID="com.balsamiq.mockups::Label" x="3227" y="951" w="-1" h="-1" measuredW="124" measuredH="21" zOrder="127" locked="false" isInGroup="-1">
       <controlProperties>
         <text>type%20your%20message</text>
+      </controlProperties>
+    </control>
+    <control controlID="510" controlTypeID="com.balsamiq.mockups::Icon" x="909" y="1530" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="128" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>AIMIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="511" controlTypeID="com.balsamiq.mockups::Label" x="946" y="1531" w="99" h="21" measuredW="93" measuredH="21" zOrder="129" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>facebook%20icon</text>
+      </controlProperties>
+    </control>
+    <control controlID="512" controlTypeID="com.balsamiq.mockups::Icon" x="911" y="1567" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="130" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>AIMIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="513" controlTypeID="com.balsamiq.mockups::Label" x="948" y="1568" w="99" h="21" measuredW="77" measuredH="21" zOrder="131" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>google%20icon</text>
       </controlProperties>
     </control>
   </controls>

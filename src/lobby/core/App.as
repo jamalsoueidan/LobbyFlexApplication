@@ -92,12 +92,6 @@ package lobby.core
 					break;
 				}
 				
-				case ExtensionResponse.SESSION_KEY: 
-				{
-					UserManager.setSession(object.getUtfString("session"));
-					CookieManager.setSession(object.getUtfString("session"));
-					break;	
-				}
 				default:
 				{
 					break;
