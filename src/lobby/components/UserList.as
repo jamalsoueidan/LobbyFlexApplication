@@ -29,7 +29,7 @@ package lobby.components
 		private var _title:Label;
 		private var _body:Label;
 		
-		private var _server:Connector = ConnectManager.server;
+		private var _server:Connector = ConnectManager.getInstance();
 		
 		private var _list:Array = [];
 		private var _inviteRequest:InviteRequest;
@@ -133,7 +133,7 @@ package lobby.components
 			var userOppount:UserButton = evt.target as UserButton;
 			_server.send(new InviteUsersRequest([userOppount.user], 15, null));
 		
-			addPopUp(userOppount.user, ConnectManager.server.mySelf as SFSUser);
+			addPopUp(userOppount.user, ConnectManager.getInstance().mySelf as SFSUser);
 		}
 		
 		private function invitationReply(evt:SFSEvent):void {
@@ -155,7 +155,7 @@ package lobby.components
 		 * 
 		 */
 		private function invitation(evt:SFSEvent):void {
-			addPopUp(ConnectManager.server.mySelf as SFSUser, evt.params.invitation.inviter);
+			addPopUp(ConnectManager.getInstance().mySelf as SFSUser, evt.params.invitation.inviter);
 			_invitation = evt.params.invitation;
 			
 		}

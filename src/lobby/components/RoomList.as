@@ -31,7 +31,7 @@ package lobby.components
 		{
 			super();
 			
-			_server = ConnectManager.server;
+			_server = ConnectManager.getInstance();
 		
 			_server.addEventListener(SFSEvent.EXTENSION_RESPONSE, extensionResponse);
 		}

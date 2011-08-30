@@ -6,9 +6,9 @@ package lobby.managers
 	{
 		static private var _server:Connector;
 		
-		static public function get server():Connector {
+		static public function getInstance():Connector {
 			if ( !_server ) {
-				_server = new Connector(true);
+				_server = new Connector();
 			}
 			
 			return _server;

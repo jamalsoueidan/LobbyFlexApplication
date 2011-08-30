@@ -8,12 +8,11 @@ package lobby.managers
 		static public const REGISTERED_COLOR:int = 0x009ACD;
 		
 		static public function isRegistered(user:SFSUser):Boolean {
-			return (user.getVariable("isRegistered").getBoolValue());
+			return (user.getVariable("status").getIntValue() == 1)
 		}
 	
 		static private var session:String;
 		static public function setSession(value:String):void {
-			trace(value);
 			session = value;
 		}
 		

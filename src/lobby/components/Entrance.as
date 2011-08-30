@@ -47,7 +47,7 @@ package lobby.components
 			
 			if ( !_userProfile ) {
 				_userProfile = new UserProfile();
-				_userProfile.sfsUser = ConnectManager.server.mySelf as SFSUser;
+				_userProfile.sfsUser = ConnectManager.getInstance().mySelf as SFSUser;
 				_top.addElement(_userProfile);
 			}
 			

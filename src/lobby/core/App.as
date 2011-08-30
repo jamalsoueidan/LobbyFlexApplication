@@ -13,6 +13,7 @@ package lobby.core
 	import com.smartfoxserver.v2.requests.RoomSettings;
 	import com.smartfoxserver.v2.requests.game.InvitationReplyRequest;
 	
+	import flash.display.LoaderInfo;
 	import flash.events.Event;
 	import flash.external.ExternalInterface;
 	import flash.net.SharedObject;
@@ -29,30 +30,26 @@ package lobby.core
 
 	public class App extends Application
 	{
-		static public const URL:String = "http://localhost:3000/";
-		static public const LOBBY:String = "Lobby";
-		static public const GROUP_GAMES:String = "game";
-		
-		private var _login:Login;
+		public static var _instance:App;
 		
 		private var _entrance:Entrance;
 		
 		private var _server:Connector;
 		
+		public static function getInstance():App {
+			return _instance;
+		}
+		
 		override protected function createChildren():void {
-			
 			super.createChildren();
-			
-			if (!_login ) {
-				_login = new Login();
-				addElement(_login);
-			}
 			
 			if ( !_entrance ) {
 				_entrance = new Entrance();
-			}
+			}			
 			
-			_server = ConnectManager.server;
+			_server = ConnectManager.getInstance();
+			
+			_server.setup(systemManager.loaderInfo.parameters);
 			_server.addEventListener(SFSEvent.ROOM_JOIN, roomJoined);
 			_server.addEventListener(SFSEvent.EXTENSION_RESPONSE, extensionResponse);
 		}
@@ -61,7 +58,6 @@ package lobby.core
 		{	
 			_server.removeEventListener(SFSEvent.ROOM_JOIN, roomJoined);
 			
-			removeElement(_login);
 			addElement(_entrance);
 			
 			_server.addEventListener(SFSEvent.INVITATION_REPLY, invitationReply);
@@ -92,7 +88,7 @@ package lobby.core
 				case ExtensionResponse.CREATE_CUSTOM_ROOM:
 				{
 					_server.disconnect();
-					ExternalInterface.call("redirectTo", object.getUtfString("roomName"), UserManager.getSession());
+					ExternalInterface.call("redirectToGame");
 					break;
 				}
 				
