@@ -1,11 +1,6 @@
 package com.soueidan.games.lobby.components
 {
-	import com.smartfoxserver.v2.entities.Room;
 	import com.smartfoxserver.v2.entities.data.SFSObject;
-	
-	import flash.events.MouseEvent;
-	
-	import com.soueidan.games.lobby.managers.ConnectManager;
 	
 	import spark.components.HGroup;
 	import spark.components.Label;
@@ -15,8 +10,8 @@ package com.soueidan.games.lobby.components
 		private var _sfsRoom:SFSObject;
 		private var _sfsRoomChanged:Boolean;
 		
-		private var _inviter:UserProfile;
-		private var _invitee:UserProfile;
+		private var _inviter:UserVersus;
+		private var _invitee:UserVersus;
 		
 		private var _label:Label;
 		
@@ -43,11 +38,11 @@ package com.soueidan.games.lobby.components
 			}
 			
 			if ( !_inviter ) {
-				_inviter = new UserProfile();
+				_inviter = new UserVersus();
 			}
 			
 			if ( !_invitee ) {
-				_invitee = new UserProfile();
+				_invitee = new UserVersus();
 			}
 			
 			super.createChildren();
