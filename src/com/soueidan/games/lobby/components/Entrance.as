@@ -9,7 +9,7 @@ package com.soueidan.games.lobby.components
 	import spark.layouts.HorizontalLayout;
 	import spark.layouts.VerticalLayout;
 
-	public class Entrance extends TitleWindow
+	public class Entrance extends Group
 	{
 		private var _top:HGroup;
 		
@@ -23,8 +23,6 @@ package com.soueidan.games.lobby.components
 		public function Entrance():void {
 			super();
 			
-			title = "Lobby";
-			
 			var verticalLayout:VerticalLayout = new VerticalLayout();
 			verticalLayout.paddingBottom = verticalLayout.paddingLeft = verticalLayout.paddingRight = verticalLayout.paddingTop = 10;
 			
@@ -33,8 +31,7 @@ package com.soueidan.games.lobby.components
 			setStyle("verticalCenter", 0);
 			setStyle("horizontalCenter", 0);
 			
-			width = 400;
-			height = 400;
+			percentWidth = percentHeight = 100;
 		}
 		
 		override protected function createChildren():void {
