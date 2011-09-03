@@ -6,18 +6,19 @@ package com.soueidan.games.lobby.components
 	import com.smartfoxserver.v2.entities.invitation.Invitation;
 	import com.smartfoxserver.v2.entities.invitation.InvitationReply;
 	import com.smartfoxserver.v2.entities.invitation.SFSInvitation;
+	import com.smartfoxserver.v2.entities.variables.UserVariable;
 	import com.smartfoxserver.v2.exceptions.SFSError;
 	import com.smartfoxserver.v2.requests.IRequest;
 	import com.smartfoxserver.v2.requests.game.InvitationReplyRequest;
 	import com.smartfoxserver.v2.requests.game.InviteUsersRequest;
+	import com.soueidan.games.lobby.core.*;
+	import com.soueidan.games.lobby.events.InviteEvent;
+	import com.soueidan.games.lobby.managers.*;
 	
 	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
-	
-	import com.soueidan.games.lobby.core.*;
-	import com.soueidan.games.lobby.events.InviteEvent;
-	import com.soueidan.games.lobby.managers.*;
+	import flash.utils.getQualifiedClassName;
 	
 	import mx.events.CloseEvent;
 	import mx.managers.PopUpManager;
@@ -33,6 +34,7 @@ package com.soueidan.games.lobby.components
 		
 		private var _list:Array = [];
 		private var _inviteRequest:InviteRequest;
+
 		
 		public function UserList()
 		{
@@ -42,7 +44,28 @@ package com.soueidan.games.lobby.components
 			_server.addEventListener(SFSEvent.USER_EXIT_ROOM, userExitRoom);
 			_server.addEventListener(SFSEvent.USER_COUNT_CHANGE, showNoUsers);
 			
+			_server.addEventListener(SFSEvent.USER_VARIABLES_UPDATE, userUpdateVariable);
+			
 			addEventListener(MouseEvent.CLICK, clickedUser);
+		}
+		
+		private function userUpdateVariable(event:SFSEvent):void
+		{
+			var user:User = event.params.user;
+			if ( user.isItMe ) {
+				return;
+			}
+			
+			var variable:UserVariable = user.getVariable("status");
+			if (variable) {
+				for each(var current:UserPlayer in _list ) {
+					trace(current.user.id, user.id);
+					if ( current.user.id == user.id ) {
+						current.update("status");
+					}
+				}
+			}
+			
 		}
 		
 		private function showNoUsers(evt:SFSEvent):void
@@ -89,7 +112,7 @@ package com.soueidan.games.lobby.components
 			
 			for each( var user:SFSUser in _server.userManager.getUserList() ) {
 				if ( !user.isItMe ) {
-					var userOpponent:UserButton = new UserButton(user);
+					var userOpponent:UserPlayer = new UserPlayer(user);
 					_list.push(userOpponent);
 					addElement(userOpponent);
 					addedAnything = true;
@@ -105,13 +128,13 @@ package com.soueidan.games.lobby.components
 		{
 			removeEmptyLabel();
 						
-			var userOpponent:UserButton = new UserButton(evt.params.user);
+			var userOpponent:UserPlayer = new UserPlayer(evt.params.user);
 			_list.push(userOpponent);
 			addElement(userOpponent);
 		}
 		
 		private function userExitRoom(evt:SFSEvent):void {
-			var userOpponent:UserButton;
+			var userOpponent:UserPlayer;
 
 			for(var i:int=0;i<_list.length;i++) {
 				userOpponent = _list[i];
@@ -125,12 +148,12 @@ package com.soueidan.games.lobby.components
 		}
 		
 		private function clickedUser(evt:MouseEvent):void {
-			var isUserOppount:Boolean = evt.target is UserButton;
+			var isUserOppount:Boolean = evt.target is UserPlayer;
 			if ( !isUserOppount ) {
 				return;
 			}
 			
-			var userOppount:UserButton = evt.target as UserButton;
+			var userOppount:UserPlayer = evt.target as UserPlayer;
 			_server.send(new InviteUsersRequest([userOppount.user], 15, null));
 		
 			addPopUp(userOppount.user, ConnectManager.getInstance().mySelf as SFSUser);
