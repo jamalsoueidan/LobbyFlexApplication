@@ -1,31 +1,34 @@
 package com.soueidan.games.lobby.components
 {
 	import com.smartfoxserver.v2.entities.SFSUser;
-	import com.smartfoxserver.v2.entities.data.ISFSObject;
-	import com.smartfoxserver.v2.entities.data.SFSObject;
-	
+	import com.smartfoxserver.v2.requests.IRequest;
+	import com.soueidan.games.lobby.core.StatusProfile;
+	import com.soueidan.games.lobby.managers.ConnectManager;
 	import com.soueidan.games.lobby.managers.UserManager;
+	import com.soueidan.games.lobby.requests.StatusRequest;
 	
+	import spark.components.DropDownList;
+	import spark.components.HGroup;
+	import spark.components.Image;
 	import spark.components.Label;
 	import spark.components.VGroup;
+	import spark.core.ContentCache;
+	import spark.events.DropDownEvent;
 	
-	public class UserProfile extends VGroup
+	public class UserProfile extends HGroup
 	{
+		private var _cache:ContentCache = new ContentCache();
+		private var _image:Image;
+		
 		private var _userNickname:Label;
 		private var _userRegistered:Label;
+		
+		private var _vGroup:VGroup;
 		
 		private var _sfsUser:SFSUser;
 		private var _sfsUserChanged:Boolean;
 		
-		private var _sfsObject:ISFSObject;
-		private var _sfsObjectChanged:Boolean;
-		
-		
-		public function set sfsObject(value:ISFSObject):void {
-			_sfsObject = value;
-			_sfsObjectChanged = true;
-			invalidateProperties();
-		}
+		private var _list:DropDownList;
 
 		public function set sfsUser(value:SFSUser):void {
 			_sfsUser = value;
@@ -36,15 +39,40 @@ package com.soueidan.games.lobby.components
 		override protected function childrenCreated():void {
 			super.createChildren();
 			
+			if ( !_image ) {
+				_image = new Image();
+				_image.contentLoader = _cache;
+				addElement(_image);
+			}
+			
+			if ( !_vGroup ) {
+				_vGroup = new VGroup();
+				addElement(_vGroup);
+			}
+			
 			if ( !_userNickname ) {
 				_userNickname = new Label();
-				addElement(_userNickname);
+				_vGroup.addElement(_userNickname);
 			}
 			
 			if (!_userRegistered ) {
 				_userRegistered = new Label();
-				addElement(_userRegistered);
+				_vGroup.addElement(_userRegistered);
 			}
+			
+			if ( !_list ) {
+				_list = new DropDownList();
+				_list.dataProvider = StatusProfile.getList();
+				_list.addEventListener(DropDownEvent.CLOSE, choosenFromList);
+				_list.selectedIndex = 0;
+				_vGroup.addElement(_list);
+			}
+		}
+		
+		private function choosenFromList(event:DropDownEvent):void
+		{
+			var request:IRequest = new StatusRequest(_list.selectedItem);
+			ConnectManager.getInstance().send(request);
 		}
 		
 		override protected function commitProperties():void {
@@ -53,20 +81,9 @@ package com.soueidan.games.lobby.components
 				
 				_userNickname.text = _sfsUser.name;
 				_userRegistered.text = UserManager.privilege(_sfsUser);	
+				_image.source = UserManager.avatar(_sfsUser);
 			}
 			
-			if ( _sfsObjectChanged ) {
-				_sfsObjectChanged = false;
-				
-				_userNickname.text = _sfsObject.getUtfString("name");
-				
-				trace(_userNickname.text, _sfsObject.getBool("isRegistered"));
-				if ( _sfsObject.getBool("isRegistered") ) {
-					_userRegistered.text = "Registered";	
-				} else {
-					_userRegistered.text = "Guest";
-				}
-			}
 			super.commitProperties();
 		}
 	}
