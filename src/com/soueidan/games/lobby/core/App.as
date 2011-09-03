@@ -1,33 +1,17 @@
 package com.soueidan.games.lobby.core 
 {
 	import com.smartfoxserver.v2.core.SFSEvent;
-	import com.smartfoxserver.v2.entities.Room;
-	import com.smartfoxserver.v2.entities.SFSUser;
-	import com.smartfoxserver.v2.entities.data.ISFSArray;
-	import com.smartfoxserver.v2.entities.data.ISFSObject;
-	import com.smartfoxserver.v2.entities.data.SFSArray;
-	import com.smartfoxserver.v2.entities.data.SFSObject;
+	import com.smartfoxserver.v2.entities.data.*;
 	import com.smartfoxserver.v2.entities.invitation.InvitationReply;
-	import com.smartfoxserver.v2.exceptions.SFSError;
-	import com.smartfoxserver.v2.requests.CreateRoomRequest;
 	import com.smartfoxserver.v2.requests.ExtensionRequest;
-	import com.smartfoxserver.v2.requests.RoomExtension;
-	import com.smartfoxserver.v2.requests.RoomSettings;
-	import com.smartfoxserver.v2.requests.game.InvitationReplyRequest;
-	
-	import flash.display.LoaderInfo;
-	import flash.events.Event;
-	import flash.external.ExternalInterface;
-	import flash.net.SharedObject;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
-	
 	import com.soueidan.games.lobby.components.*;
 	import com.soueidan.games.lobby.events.*;
 	import com.soueidan.games.lobby.managers.*;
 	import com.soueidan.games.lobby.responses.CreateRoomResponse;
 	
-	import mx.events.FlexEvent;
+	import flash.events.Event;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	
 	import spark.components.*;
 	import spark.events.*;
