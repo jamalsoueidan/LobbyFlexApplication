@@ -2,12 +2,12 @@ package com.soueidan.games.lobby.core
 {
 	import com.smartfoxserver.v2.SmartFox;
 	import com.smartfoxserver.v2.core.SFSEvent;
+	import com.smartfoxserver.v2.entities.Room;
 	import com.smartfoxserver.v2.entities.data.ISFSObject;
 	import com.smartfoxserver.v2.entities.data.SFSObject;
 	import com.smartfoxserver.v2.logging.Logger;
 	import com.smartfoxserver.v2.requests.IRequest;
 	import com.smartfoxserver.v2.requests.LoginRequest;
-	
 	import com.soueidan.games.lobby.events.*;
 	import com.soueidan.games.lobby.responses.ServerResponseHandler;
 	
@@ -23,6 +23,10 @@ package com.soueidan.games.lobby.core
 		
 		public function get gameId():int {
 			return _xml.id;
+		}
+		
+		public function get currentRoom():Room {
+			return getRoomByName("lobby");
 		}
 		
 		public function start(xmlData:String):void {
