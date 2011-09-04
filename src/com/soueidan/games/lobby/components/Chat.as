@@ -9,6 +9,7 @@ package com.soueidan.games.lobby.components
 	import com.soueidan.games.lobby.interfaces.ITab;
 	import com.soueidan.games.lobby.managers.ApplicationManager;
 	import com.soueidan.games.lobby.managers.ConnectManager;
+	import com.soueidan.games.lobby.managers.ResourceManager;
 	import com.soueidan.games.lobby.managers.SmiliesManager;
 	
 	import flash.events.KeyboardEvent;
@@ -16,6 +17,7 @@ package com.soueidan.games.lobby.components
 	import flash.ui.Keyboard;
 	
 	import flashx.textLayout.elements.TextFlow;
+	import flashx.textLayout.formats.Direction;
 	
 	import mx.utils.StringUtil;
 	
@@ -68,6 +70,9 @@ package com.soueidan.games.lobby.components
 			
 			if ( !_textInput ) {
 				_textInput = new TextInput();
+				if ( ResourceManager.getString("application.layoutDirection") == Direction.RTL ) {
+					_textInput.setStyle("textAlign", "right");
+				}
 				_textInput.percentWidth = 85;
 				_form.addElement(_textInput);
 			}
@@ -95,7 +100,9 @@ package com.soueidan.games.lobby.components
 		{
 			var user:SFSUser = event.params.sender;
 			var msg:String = event.params.message;
-			_texts.push('<p fontWeight="bold"><span fontWeight="normal">' + user.name.toString() + ':</span> ' + SmiliesManager.convert(msg) + '</p>');
+			
+			_texts.push('<p fontWeight="bold"><span fontWeight="normal">' + user.name.toString() + ':</span><span color="0xFFFFFF">ا</span>' + SmiliesManager.convert(msg) + '</p>');
+			
 			if (_texts.length > MAX_LINES ) {
 				_texts.shift();
 			}
@@ -104,7 +111,10 @@ package com.soueidan.games.lobby.components
 			for(var i:int=0;i<_texts.length;i++) {
 				text += _texts[i];
 			}
-			_textArea.textFlow = TextFlowUtil.importFromString(text); 
+			
+			_textArea.textFlow = TextFlowUtil.importFromString(text);
+			_textArea.textFlow.direction = ResourceManager.getString("application.layoutDirection");
+			_textArea.textFlow.flowComposer.updateAllControllers();
 		}
 		
 		private function submitForm(event:MouseEvent=null):void
