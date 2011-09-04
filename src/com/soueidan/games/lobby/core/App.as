@@ -16,6 +16,7 @@ package com.soueidan.games.lobby.core
 	import spark.components.*;
 	import spark.events.*;
 
+	[ResourceBundle("resources")] 
 	public class App extends Application
 	{
 		private var _entrance:Entrance;
@@ -25,18 +26,30 @@ package com.soueidan.games.lobby.core
 		
 		private var _urlLoader:URLLoader;
 		
+		public function App():void {
+			super();
+			
+			ApplicationManager.setInstance(this);
+		}
+		
 		override protected function createChildren():void {
 			super.createChildren();
 			
-			ApplicationManager.setInstance(this);
-			_parameters = systemManager.loaderInfo.parameters
+			_parameters = systemManager.loaderInfo.parameters	
+				
+			if ( _parameters.language == "ar" ) {
+				resourceManager.localeChain = ['ar', 'en'];
+			} else {
+				resourceManager.localeChain = ['en', 'ar'];
+			}
+			
+			layoutDirection = resourceManager.getString('resources','application.layoutDirection')
 				
 			if ( !_entrance ) {
 				_entrance = new Entrance();
 			}			
 			
 			if ( !_urlLoader ) {
-				trace("load xml file");
 				_urlLoader = new URLLoader();
 				_urlLoader.addEventListener(Event.COMPLETE, configurationFileReady);
 				_urlLoader.load(new URLRequest(_parameters.config));
