@@ -2,11 +2,10 @@ package com.soueidan.games.lobby.components
 {
 	import com.smartfoxserver.v2.entities.SFSUser;
 	import com.smartfoxserver.v2.entities.UserPrivileges;
-	
-	import flash.events.MouseEvent;
-	
 	import com.soueidan.games.lobby.events.InviteEvent;
 	import com.soueidan.games.lobby.managers.UserManager;
+	
+	import flash.events.MouseEvent;
 	
 	import mx.events.CloseEvent;
 	import mx.managers.PopUpManager;
@@ -20,8 +19,8 @@ package com.soueidan.games.lobby.components
 	{
 		private var _profile:HGroup;
 		
-		private var _inviterProfile:UserProfile;
-		private var _inviteeProfile:UserProfile;
+		private var _inviterProfile:UserVersus;
+		private var _inviteeProfile:UserVersus;
 		
 		private var _inviter:SFSUser; //User object corresponding to the user who sent the invitation.
 		private var _invitee:SFSUser; //User object corresponding to the user who received the invitation.
@@ -98,12 +97,12 @@ package com.soueidan.games.lobby.components
 			}
 			
 			if ( !_inviterProfile) {
-				_inviterProfile = new UserProfile();
+				_inviterProfile = new UserVersus();
 				_profile.addElement(_inviterProfile);
 			}
 			
 			if ( !_inviteeProfile ){
-				_inviteeProfile = new UserProfile();
+				_inviteeProfile = new UserVersus();
 				_profile.addElement(_inviteeProfile);
 			}
 			
@@ -118,7 +117,7 @@ package com.soueidan.games.lobby.components
 				_inviteChanged = false;
 				
 				if ( _inviterProfile && _inviter ) {
-					_inviterProfile.sfsUser = _inviter;
+					_inviterProfile.user = _inviter;
 					
 					if ( _inviter.isItMe ) {
 						removeAcceptAndRejectButtons();	
@@ -130,7 +129,7 @@ package com.soueidan.games.lobby.components
 				}
 				
 				if ( _inviteeProfile && _invitee ) {
-					_inviteeProfile.sfsUser = _invitee;
+					_inviteeProfile.user = _invitee;
 					
 					if ( _invitee.isItMe ) {
 						addAcceptAndRejectButtons();

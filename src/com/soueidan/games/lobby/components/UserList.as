@@ -5,10 +5,7 @@ package com.soueidan.games.lobby.components
 	import com.smartfoxserver.v2.entities.User;
 	import com.smartfoxserver.v2.entities.invitation.Invitation;
 	import com.smartfoxserver.v2.entities.invitation.InvitationReply;
-	import com.smartfoxserver.v2.entities.invitation.SFSInvitation;
 	import com.smartfoxserver.v2.entities.variables.UserVariable;
-	import com.smartfoxserver.v2.exceptions.SFSError;
-	import com.smartfoxserver.v2.requests.IRequest;
 	import com.smartfoxserver.v2.requests.game.InvitationReplyRequest;
 	import com.smartfoxserver.v2.requests.game.InviteUsersRequest;
 	import com.soueidan.games.lobby.core.*;
@@ -16,11 +13,7 @@ package com.soueidan.games.lobby.components
 	import com.soueidan.games.lobby.managers.*;
 	
 	import flash.events.MouseEvent;
-	import flash.net.URLRequest;
-	import flash.net.navigateToURL;
-	import flash.utils.getQualifiedClassName;
 	
-	import mx.events.CloseEvent;
 	import mx.managers.PopUpManager;
 	
 	import spark.components.*;
@@ -80,7 +73,7 @@ package com.soueidan.games.lobby.components
 			
 			if (!_title) {
 				_title = new Label();
-				_title.text = "Player List";
+				_title.text = ResourceManager.getString("userList.title");
 				_title.setStyle("fontWeight", "bold");
 				_title.setStyle("fontSize", 14);
 				addElement(_title);
@@ -88,7 +81,7 @@ package com.soueidan.games.lobby.components
 			
 			if (!_body) {
 				_body = new Label();
-				_body.text = "No players on this lobby";
+				_body.text = ResourceManager.getString("userList.empty");
 				addElement(_body);
 			}
 			
@@ -148,24 +141,26 @@ package com.soueidan.games.lobby.components
 		}
 		
 		private function clickedUser(evt:MouseEvent):void {
-			var isUserOppount:Boolean = evt.target is UserPlayer;
+			var isUserOppount:Boolean = evt.target is Button;
 			if ( !isUserOppount ) {
 				return;
 			}
 			
-			var userOppount:UserPlayer = evt.target as UserPlayer;
-			_server.send(new InviteUsersRequest([userOppount.user], 15, null));
-		
-			addPopUp(userOppount.user, ConnectManager.getInstance().mySelf as SFSUser);
+			var btn:Button = evt.target as Button;
+			if ( btn.id == "invite" ) {
+				var userOppount:UserPlayer = (evt.target).parent.parent as UserPlayer;
+				_server.send(new InviteUsersRequest([userOppount.user], 15, null));
+				addPopUp(userOppount.user, ConnectManager.getInstance().mySelf as SFSUser);
+			}
 		}
 		
 		private function invitationReply(evt:SFSEvent):void {
 			PopUpManager.removePopUp(_inviteRequest);
 			
 			if ( evt.params.reply == InvitationReply.ACCEPT ) {
-				navigateToURL(new URLRequest(''),'_self')
+				//navigateToURL(new URLRequest(''),'_self')
 			} else {
-				trace("REJECT GAME");
+				//trace("REJECT GAME");
 			}
 		}
 		

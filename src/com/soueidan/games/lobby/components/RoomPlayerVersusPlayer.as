@@ -52,9 +52,9 @@ package com.soueidan.games.lobby.components
 			if ( _sfsRoomChanged ) {
 				_sfsRoomChanged = false;
 				
-				_invitee.sfsObject = _sfsRoom.getSFSObject("invitee");
+				//_invitee.sfsObject = _sfsRoom.getSFSObject("invitee");
 				addElement(_invitee);
-				_inviter.sfsObject = _sfsRoom.getSFSObject("inviter");
+				//_inviter.sfsObject = _sfsRoom.getSFSObject("inviter");
 				addElement(_inviter);
 			}
 			

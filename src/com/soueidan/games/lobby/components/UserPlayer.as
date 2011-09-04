@@ -19,26 +19,28 @@ package com.soueidan.games.lobby.components
 		private var _cache:ContentCache= new ContentCache();
 		private var _image:Image;
 		
+		private var _userNicknameAndStatus:HGroup;
+		
 		private var _userNickname:Label;
-		private var _userRegistered:Label;
+		private var _userRank:Label;
 		
 		private var _vGroup:VGroup;
 		
 		private var _sfsUser:SFSUser;
 		private var _sfsUserChanged:Boolean;
 		
+		private var _status:Button;
 		private var _currentStatus:int = -1;
 		private var _statusChanged:Boolean;
+		
+		private var _invite:Button;
 		
 		public function UserPlayer(value:SFSUser):void {
 			_sfsUser = value;
 			_sfsUserChanged = true;
 			
-			// REMEMBER TO UPDATE THESE VARIABLES
 			minHeight = 48;
 			minWidth = 148;
-			
-			update("status");
 		}
 		
 		override protected function childrenCreated():void {
@@ -55,15 +57,34 @@ package com.soueidan.games.lobby.components
 				addElement(_vGroup);
 			}
 			
-			if ( !_userNickname ) {
-				_userNickname = new Label();
-				_vGroup.addElement(_userNickname);
+			if ( !_userNicknameAndStatus) {
+				_userNicknameAndStatus= new HGroup();
+				_vGroup.addElement(_userNicknameAndStatus);
 			}
 			
-			if (!_userRegistered ) {
-				_userRegistered = new Label();
-				_vGroup.addElement(_userRegistered);
+			if ( !_userNickname ) {
+				_userNickname = new Label();
+				_userNicknameAndStatus.addElement(_userNickname);
 			}
+
+			if ( !_status ) {
+				_status = new Button();
+				_userNicknameAndStatus.addElement(_status);
+			}
+			
+			if (!_userRank ) {
+				_userRank = new Label();
+				_userRank.text = "Rank: 0";
+				_vGroup.addElement(_userRank);
+			}
+			
+			if ( !_invite ) {
+				_invite = new Button();
+				_invite.id = "invite";
+				_invite.label = "Invite";
+			}
+			
+			update("status");
 		}
 		
 		override protected function commitProperties():void {
@@ -71,39 +92,24 @@ package com.soueidan.games.lobby.components
 				_sfsUserChanged = false;
 				
 				_userNickname.text = _sfsUser.name;
-				_userRegistered.text = UserManager.privilege(_sfsUser);	
+				_userRank.text = UserManager.privilege(_sfsUser);	
 				_image.source = UserManager.avatar(_sfsUser);
 			}
 			
 			super.commitProperties();
 		}
 		
-		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
-			if ( _statusChanged ) {
-				_statusChanged = false;
-				
-				var g:Graphics = graphics;
-				var color:int;
-				switch(_currentStatus)
-				{
-					case StatusProfile.doNotDistrub:
-					{
-						color = 0xFF0040;
-						break;
-					}
-						
-					default:
-					{
-						color = 0x009966;
-						break;
-					}
-				}
-				
-				g.beginFill(color);
-				g.drawRect(0,0,getExplicitOrMeasuredWidth(),getExplicitOrMeasuredHeight());
-				g.endFill();
+		private function updateInviteButton():void
+		{
+			if ( _currentStatus == StatusProfile.readyToPlay ) {
+				_status.label = "Ready";	
 			}
-			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			
+			if ( _currentStatus == StatusProfile.doNotDistrub) {
+				_status.label = "Not";	
+			}
+			
+			invalidateDisplayList();
 		}
 		
 		public function get user():SFSUser {
@@ -126,7 +132,7 @@ package com.soueidan.games.lobby.components
 			
 			_currentStatus = userVar.getIntValue();
 			_statusChanged = true;
-			invalidateDisplayList();
+			updateInviteButton();
 		}
 		
 	}
