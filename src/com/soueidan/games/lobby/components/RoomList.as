@@ -1,22 +1,16 @@
 package com.soueidan.games.lobby.components
 {
 	import com.smartfoxserver.v2.core.SFSEvent;
-	import com.smartfoxserver.v2.entities.Room;
-	import com.smartfoxserver.v2.entities.SFSUser;
 	import com.smartfoxserver.v2.entities.data.ISFSArray;
-	import com.smartfoxserver.v2.entities.data.SFSArray;
 	import com.smartfoxserver.v2.entities.data.SFSObject;
-	
-	import flash.events.TimerEvent;
-	import flash.utils.Timer;
-	
+	import com.soueidan.games.lobby.interfaces.ITab;
 	import com.soueidan.games.lobby.core.*;
 	import com.soueidan.games.lobby.managers.ConnectManager;
 	
 	import spark.components.Label;
 	import spark.components.VGroup;
 	
-	public class RoomList extends VGroup
+	public class RoomList extends VGroup implements ITab
 	{
 		private var _server:Connector;
 		
@@ -30,6 +24,8 @@ package com.soueidan.games.lobby.components
 		public function RoomList()
 		{
 			super();
+			
+			percentWidth = 100;
 			
 			_server = ConnectManager.getInstance();
 		
@@ -122,6 +118,19 @@ package com.soueidan.games.lobby.components
 				removeElement(_body);
 			}
 		}
+		
+		public function hide():void
+		{
+			// TODO Auto Generated method stub
+			
+		}
+		
+		public function show():void
+		{
+			// TODO Auto Generated method stub
+			
+		}
+		
 		
 	}
 }
