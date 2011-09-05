@@ -43,7 +43,7 @@ package com.soueidan.games.lobby.core
 				resourceManager.localeChain = ['en', 'ar'];
 			}
 			
-			layoutDirection = resourceManager.getString('resources','application.layoutDirection');
+			layoutDirection = resourceManager.getString('resources','direction');
 				
 			if ( !_entrance ) {
 				_entrance = new Entrance();

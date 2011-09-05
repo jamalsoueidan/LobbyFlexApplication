@@ -60,7 +60,7 @@ package com.soueidan.games.lobby.components
 			
 			if ( !_textInput ) {
 				_textInput = new TextInput();
-				if ( ResourceManager.getString("application.layoutDirection") == Direction.RTL ) {
+				if ( ResourceManager.getString("direction") == Direction.RTL ) {
 					_textInput.setStyle("textAlign", "right");
 				}
 				_textInput.percentWidth = 85;
@@ -103,7 +103,7 @@ package com.soueidan.games.lobby.components
 			}
 			
 			_textArea.textFlow = TextFlowUtil.importFromString(text);
-			_textArea.textFlow.direction = ResourceManager.getString("application.layoutDirection");
+			_textArea.textFlow.direction = ResourceManager.getString("direction");
 			_textArea.textFlow.flowComposer.updateAllControllers();
 		}
 		
