@@ -14,6 +14,7 @@ package com.soueidan.games.lobby.components
 	import spark.components.HGroup;
 	import spark.components.TitleWindow;
 	import spark.layouts.VerticalLayout;
+	import com.soueidan.games.lobby.components.users.UserVersus;
 	
 	public class InviteRequest extends TitleWindow
 	{

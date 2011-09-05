@@ -12,6 +12,7 @@ package com.soueidan.games.lobby.core
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import flash.utils.Timer;
 	
 	import spark.components.*;
 	import spark.events.*;
@@ -56,15 +57,28 @@ package com.soueidan.games.lobby.core
 			}
 		}
 		
+		private var _timer:Timer;
 		private function configurationFileReady(event:Event):void
 		{
 			trace("setup configuration");
 			_server = ConnectManager.getInstance();
 			_server.parameters = _parameters;
+			_server.addEventListener(SFSEvent.CONNECTION_LOST, lostConnection);
+			_server.addEventListener(SFSEvent.CONNECTION_RESUME, lostConnection);
+			_server.addEventListener(SFSEvent.CONNECTION_RETRY, lostConnection);
 			_server.addEventListener(SFSEvent.ROOM_JOIN, roomJoined);
 			_server.addEventListener(SFSEvent.INVITATION_REPLY, invitationReply);
 			_server.addResponseHandler(CreateRoomResponse.CREATE_ROOM, CreateRoomResponse);
 			_server.start(_urlLoader.data);
+			
+			_timer = new Timer(1000,1000);
+			_timer.start();
+		}
+		
+		private function lostConnection(event:SFSEvent):void
+		{
+			trace(_timer.currentCount);
+			trace(event.type);
 		}
 		
 		private function roomJoined(evt:SFSEvent):void

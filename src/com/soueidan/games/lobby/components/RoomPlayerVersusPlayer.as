@@ -4,6 +4,7 @@ package com.soueidan.games.lobby.components
 	
 	import spark.components.HGroup;
 	import spark.components.Label;
+	import com.soueidan.games.lobby.components.users.UserVersus;
 	
 	public class RoomPlayerVersusPlayer extends HGroup
 	{

@@ -22,6 +22,7 @@ package com.soueidan.games.lobby.components
 	
 	import spark.components.*;
 	import spark.layouts.VerticalLayout;
+	import com.soueidan.games.lobby.components.users.UserPlayer;
 	
 	public class UserList extends Panel
 	{
@@ -31,7 +32,6 @@ package com.soueidan.games.lobby.components
 		
 		private var _list:Array = [];
 		private var _inviteRequest:InviteRequest;
-
 		
 		public function UserList()
 		{
@@ -69,9 +69,8 @@ package com.soueidan.games.lobby.components
 			var variable:UserVariable = user.getVariable("status");
 			if (variable) {
 				for each(var current:UserPlayer in _list ) {
-					trace(current.user.id, user.id);
 					if ( current.user.id == user.id ) {
-						current.update("status");
+						current.update();
 					}
 				}
 			}
@@ -98,21 +97,9 @@ package com.soueidan.games.lobby.components
 				addElement(_body);
 			}
 			
-			if ( !_inviteRequest ) {
-				_inviteRequest = new InviteRequest();
-				_inviteRequest.addEventListener(InviteEvent.ACTION, inviteRequestHandler);
-			}
-			
-			addListener();
 			initializeUserList();
 			
 			(titleDisplay as Label).setStyle("textAlign", ResourceManager.getString("left"));
-		}
-		
-		private function addListener():void
-		{
-			_server.addEventListener(SFSEvent.INVITATION, invitation);
-			_server.addEventListener(SFSEvent.INVITATION_REPLY, invitationReply);
 		}
 		
 		private function initializeUserList():void {
@@ -120,7 +107,8 @@ package com.soueidan.games.lobby.components
 			
 			for each( var user:SFSUser in _server.userManager.getUserList() ) {
 				if ( !user.isItMe ) {
-					var userOpponent:UserPlayer = new UserPlayer(user);
+					var userOpponent:UserPlayer = new UserPlayer();
+					userOpponent.user = user;
 					_list.push(userOpponent);
 					addElement(userOpponent);
 					addedAnything = true;
@@ -136,7 +124,8 @@ package com.soueidan.games.lobby.components
 		{
 			removeEmptyLabel();
 						
-			var userOpponent:UserPlayer = new UserPlayer(evt.params.user);
+			var userOpponent:UserPlayer = new UserPlayer();
+			userOpponent.user = evt.params.user;
 			_list.push(userOpponent);
 			addElement(userOpponent);
 		}
@@ -164,57 +153,8 @@ package com.soueidan.games.lobby.components
 			var btn:Button = evt.target as Button;
 			if ( btn.id == "invite" ) {
 				var userOppount:UserPlayer = (evt.target).parent.parent as UserPlayer;
-				_server.send(new InviteUsersRequest([userOppount.user], 15, null));
-				addPopUp(userOppount.user, ConnectManager.getInstance().mySelf as SFSUser);
+				dispatchEvent(new InviteEvent(InviteEvent.SENT, false, false, userOppount));
 			}
-		}
-		
-		private function invitationReply(evt:SFSEvent):void {
-			PopUpManager.removePopUp(_inviteRequest);
-			
-			if ( evt.params.reply == InvitationReply.ACCEPT ) {
-				//navigateToURL(new URLRequest(''),'_self')
-			} else {
-				//trace("REJECT GAME");
-			}
-		}
-		
-		private var _invitation:Invitation;
-		/**
-		 * When I recieve invitation from another user who want to battle me.
-		 * Then show me window to accept or refuse the match.
-		 *  
-		 * @param evt
-		 * 
-		 */
-		private function invitation(evt:SFSEvent):void {
-			addPopUp(ConnectManager.getInstance().mySelf as SFSUser, evt.params.invitation.inviter);
-			_invitation = evt.params.invitation;
-			
-		}
-		
-		/**
-		 * When I have a answer to the inviter then response to him from the InviteRequest
-		 * InviteEvent dispatcher.
-		 * @param event
-		 * 
-		 */
-		protected function inviteRequestHandler(event:InviteEvent):void{
-			var response:int = InvitationReply.REFUSE;
-			if ( event.action == InviteEvent.ACCEPT ) {
-				response = InvitationReply.ACCEPT;
-			}
-			
-			_server.send(new InvitationReplyRequest(_invitation, response));
-		}
-			
-		
-		private function addPopUp(invitee:SFSUser, inviter:SFSUser):void {
-			_inviteRequest.invitee = invitee;
-			_inviteRequest.inviter = inviter;
-			
-			PopUpManager.addPopUp(_inviteRequest, this, true);
-			PopUpManager.centerPopUp(_inviteRequest);
 		}
 		
 		private function removeEmptyLabel():void {

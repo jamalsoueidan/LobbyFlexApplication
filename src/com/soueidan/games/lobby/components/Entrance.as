@@ -9,10 +9,12 @@ package com.soueidan.games.lobby.components
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Spacer;
+	import mx.events.FlexEvent;
 	
 	import spark.components.*;
 	import spark.events.IndexChangeEvent;
 	import spark.layouts.VerticalLayout;
+	import com.soueidan.games.lobby.components.users.UserProfile;
 
 	public class Entrance extends VGroup
 	{
@@ -33,10 +35,18 @@ package com.soueidan.games.lobby.components
 		private var _roomList:ITab;
 		private var _chatList:ITab;
 		
+		private var _inviteHandler:InviteHandler;
+		
 		public function Entrance():void {
 			super();
 			
 			percentWidth = percentHeight = 100;
+			addEventListener(FlexEvent.CREATION_COMPLETE, creationDone);	
+		}
+		
+		private function creationDone(event:FlexEvent):void
+		{
+			_inviteHandler = new InviteHandler(_userList);
 		}
 		
 		override protected function createChildren():void {
@@ -52,7 +62,7 @@ package com.soueidan.games.lobby.components
 			if ( !_userProfile ) {
 				_userProfile = new UserProfile();
 				_userProfile.percentWidth = FIRST_COLUMN_WIDTH;
-				_userProfile.sfsUser = ConnectManager.getInstance().mySelf as SFSUser;
+				_userProfile.user = ConnectManager.getInstance().mySelf as SFSUser;
 				_top.addElement(_userProfile);
 			}
 			
