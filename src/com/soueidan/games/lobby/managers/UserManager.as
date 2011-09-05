@@ -17,9 +17,29 @@ package com.soueidan.games.lobby.managers
 			}
 		}
 		
-		public static function avatar(_sfsUser:SFSUser):String
+		public static function avatar(user:SFSUser):String
 		{
-			return _sfsUser.getVariable("avatar_url").getStringValue();
+			return user.getVariable("avatar_url").getStringValue();
+		}
+		
+		public static function win(user:SFSUser):Number
+		{
+			return user.getVariable("win").getIntValue(); 
+		}
+		
+		public static function loss(user:SFSUser):Number
+		{
+			return user.getVariable("loss").getIntValue();
+		}
+		
+		public static function points(user:SFSUser):Number
+		{
+			return user.getVariable("points").getIntValue();
+		}
+		
+		public static function timesPlayed(user:SFSUser):Number
+		{
+			return UserManager.win(user) + UserManager.loss(user);
 		}
 	}
 }
