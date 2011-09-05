@@ -92,7 +92,7 @@ package com.soueidan.games.lobby.components
 				_body = new Label();
 				_body.setStyle("paddingTop", 10);
 				_body.setStyle("paddingLeft", 10);
-				_body.setStyle("paddingRigh", 10);
+				_body.setStyle("paddingRight", 10);
 				_body.setStyle("paddingBottom", 10);
 				_body.text = ResourceManager.getString("userList.empty");
 				addElement(_body);
