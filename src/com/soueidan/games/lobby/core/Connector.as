@@ -75,6 +75,7 @@ package com.soueidan.games.lobby.core
 			var params:ISFSObject = new SFSObject();
 			params.putUtfString("session", _parameters.session);
 			params.putUtfString("room", "lobby");
+			params.putInt("game_id", Number(_xml.id));
 			
 			var request:IRequest = new LoginRequest("","",_xml.zone, params);
 			send(request);
