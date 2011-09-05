@@ -12,15 +12,19 @@ package com.soueidan.games.lobby.components
 	import com.soueidan.games.lobby.events.InviteEvent;
 	import com.soueidan.games.lobby.managers.*;
 	
+	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
+	import flash.utils.getQualifiedClassName;
 	
+	import mx.core.IVisualElement;
+	import mx.graphics.codec.PNGEncoder;
 	import mx.managers.PopUpManager;
 	
 	import spark.components.*;
+	import spark.layouts.VerticalLayout;
 	
-	public class UserList extends VGroup
+	public class UserList extends Panel
 	{
-		private var _title:Label;
 		private var _body:Label;
 		
 		private var _server:Connector = ConnectManager.getInstance();
@@ -32,6 +36,19 @@ package com.soueidan.games.lobby.components
 		public function UserList()
 		{
 			super();
+			
+			setStyle("paddingTop", 0);
+			setStyle("paddingLeft", 0);
+			setStyle("paddingBottom", 0);
+			setStyle("paddingRight", 0);
+			
+			setStyle("dropShadowVisible", false);
+			
+			title = ResourceManager.getString("userList.title");
+			
+			var vertial:VerticalLayout = new VerticalLayout();
+			vertial.gap = 0;			
+			layout = vertial;
 			
 			_server.addEventListener(SFSEvent.USER_ENTER_ROOM, userEnterRoom);
 			_server.addEventListener(SFSEvent.USER_EXIT_ROOM, userExitRoom);
@@ -63,24 +80,20 @@ package com.soueidan.games.lobby.components
 		
 		private function showNoUsers(evt:SFSEvent):void
 		{
-			if ( !containsElement(_body) && _list.length == 0 ) {
+			if ( !contains(_body) && _list.length == 0 ) {
 				addElement(_body);
 			}
 		}
 		
 		override protected function createChildren():void {
 			super.createChildren();
-			
-			if (!_title) {
-				_title = new Label();
-				_title.text = ResourceManager.getString("userList.title");
-				_title.setStyle("fontWeight", "bold");
-				_title.setStyle("fontSize", 14);
-				addElement(_title);
-			}
-			
+
 			if (!_body) {
 				_body = new Label();
+				_body.setStyle("paddingTop", 10);
+				_body.setStyle("paddingLeft", 10);
+				_body.setStyle("paddingRigh", 10);
+				_body.setStyle("paddingBottom", 10);
 				_body.text = ResourceManager.getString("userList.empty");
 				addElement(_body);
 			}
@@ -92,6 +105,8 @@ package com.soueidan.games.lobby.components
 			
 			addListener();
 			initializeUserList();
+			
+			(titleDisplay as Label).setStyle("textAlign", ResourceManager.getString("left"));
 		}
 		
 		private function addListener():void
@@ -203,7 +218,7 @@ package com.soueidan.games.lobby.components
 		}
 		
 		private function removeEmptyLabel():void {
-			if ( containsElement(_body) ) {
+			if ( contains(_body) ) {
 				removeElement(_body);
 			}
 		}

@@ -3,14 +3,16 @@ package com.soueidan.games.lobby.components
 	import com.smartfoxserver.v2.core.SFSEvent;
 	import com.smartfoxserver.v2.entities.data.ISFSArray;
 	import com.smartfoxserver.v2.entities.data.SFSObject;
-	import com.soueidan.games.lobby.interfaces.ITab;
 	import com.soueidan.games.lobby.core.*;
+	import com.soueidan.games.lobby.interfaces.ITab;
 	import com.soueidan.games.lobby.managers.ConnectManager;
+	
+	import flash.display.Graphics;
 	
 	import spark.components.Label;
 	import spark.components.VGroup;
 	
-	public class RoomList extends VGroup implements ITab
+	public class RoomList extends TabContainer implements ITab
 	{
 		private var _server:Connector;
 		
@@ -18,14 +20,11 @@ package com.soueidan.games.lobby.components
 		private var _newRooms:Array = [];
 		private var _roomChanged:Boolean;
 		
-		private var _title:Label;
 		private var _body:Label;
 		
 		public function RoomList()
 		{
 			super();
-			
-			percentWidth = 100;
 			
 			_server = ConnectManager.getInstance();
 		
@@ -34,14 +33,6 @@ package com.soueidan.games.lobby.components
 		
 		override protected function createChildren():void {
 			super.createChildren();
-			
-			if (!_title) {
-				_title = new Label();
-				_title.text = "Room List";
-				_title.setStyle("fontWeight", "bold");
-				_title.setStyle("fontSize", 14);
-				addElement(_title);
-			}
 			
 			if (!_body) {
 				_body = new Label();
@@ -130,6 +121,7 @@ package com.soueidan.games.lobby.components
 			// TODO Auto Generated method stub
 			
 		}
+		
 		
 		
 	}

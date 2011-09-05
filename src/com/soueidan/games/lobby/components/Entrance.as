@@ -1,8 +1,8 @@
 package com.soueidan.games.lobby.components
 {
 	import com.smartfoxserver.v2.entities.SFSUser;
-	import com.soueidan.games.lobby.interfaces.ITab;
 	import com.soueidan.games.lobby.core.*;
+	import com.soueidan.games.lobby.interfaces.ITab;
 	import com.soueidan.games.lobby.managers.*;
 	
 	import flash.events.Event;
@@ -14,17 +14,14 @@ package com.soueidan.games.lobby.components
 	import spark.events.IndexChangeEvent;
 	import spark.layouts.VerticalLayout;
 
-	public class Entrance extends Group
+	public class Entrance extends VGroup
 	{
 		
-		private static const FIRST_COLUMN_WIDTH:int = 15;
-		private static const SECOND_COLUMN_WIDTH:int = 85;
+		private static const FIRST_COLUMN_WIDTH:int = 220;
+		private static const SECOND_COLUMN_WIDTH:int = 100;
 		
 		private var _top:HGroup;
-		private var _spacer:Spacer;
 		private var _userProfile:UserProfile;
-		
-		
 		
 		private var _bottom:HGroup;
 		
@@ -39,14 +36,6 @@ package com.soueidan.games.lobby.components
 		public function Entrance():void {
 			super();
 			
-			var verticalLayout:VerticalLayout = new VerticalLayout();
-			verticalLayout.paddingBottom = verticalLayout.paddingLeft = verticalLayout.paddingRight = verticalLayout.paddingTop = 10;
-			
-			layout = verticalLayout;
-			
-			setStyle("verticalCenter", 0);
-			setStyle("horizontalCenter", 0);
-			
 			percentWidth = percentHeight = 100;
 		}
 		
@@ -56,18 +45,13 @@ package com.soueidan.games.lobby.components
 			if ( !_top ) {
 				_top = new HGroup();
 				_top.percentWidth = 100;
+				_top.paddingLeft = FIRST_COLUMN_WIDTH + 8;
 				addElement(_top);
-			}
-			
-			if (!_spacer ) {
-				_spacer = new Spacer();
-				_spacer.visible = false;
-				_spacer.percentWidth = FIRST_COLUMN_WIDTH;
-				_top.addElement(_spacer);
 			}
 			
 			if ( !_userProfile ) {
 				_userProfile = new UserProfile();
+				_userProfile.percentWidth = FIRST_COLUMN_WIDTH;
 				_userProfile.sfsUser = ConnectManager.getInstance().mySelf as SFSUser;
 				_top.addElement(_userProfile);
 			}
@@ -80,12 +64,13 @@ package com.soueidan.games.lobby.components
 			
 			if ( !_userList ) {
 				_userList = new UserList();
-				_userList.percentWidth = FIRST_COLUMN_WIDTH;
+				_userList.width = FIRST_COLUMN_WIDTH;
 				_bottom.addElement(_userList);
 			}
 			
 			if (!_tabsContainer ) {
 				_tabsContainer = new VGroup();
+				_tabsContainer.gap = 0;
 				_tabsContainer.percentWidth = SECOND_COLUMN_WIDTH;
 				_bottom.addElement(_tabsContainer);
 			}
@@ -94,8 +79,8 @@ package com.soueidan.games.lobby.components
 				_tabs = new ButtonBar();
 				_tabs.addEventListener(IndexChangeEvent.CHANGING, tabIndexChanged);
 				_tabs.dataProvider = new ArrayCollection();
-				_tabs.dataProvider.addItem('Rooms');
-				_tabs.dataProvider.addItem('Chat');
+				_tabs.dataProvider.addItem(ResourceManager.getString("entrance.rooms"));
+				_tabs.dataProvider.addItem(ResourceManager.getString("entrance.chat"));
 				_tabs.requireSelection = true;
 				_tabsContainer.addElement(_tabs);
 			}

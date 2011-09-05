@@ -4,31 +4,22 @@ package com.soueidan.games.lobby.components
 	import com.smartfoxserver.v2.entities.SFSUser;
 	import com.smartfoxserver.v2.requests.IRequest;
 	import com.smartfoxserver.v2.requests.PublicMessageRequest;
-	import com.soueidan.games.lobby.core.App;
-	import com.soueidan.games.lobby.core.Connector;
+	import com.soueidan.games.lobby.core.*;
 	import com.soueidan.games.lobby.interfaces.ITab;
-	import com.soueidan.games.lobby.managers.ApplicationManager;
-	import com.soueidan.games.lobby.managers.ConnectManager;
-	import com.soueidan.games.lobby.managers.ResourceManager;
-	import com.soueidan.games.lobby.managers.SmiliesManager;
+	import com.soueidan.games.lobby.managers.*;
 	
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.ui.Keyboard;
 	
-	import flashx.textLayout.elements.TextFlow;
 	import flashx.textLayout.formats.Direction;
 	
 	import mx.utils.StringUtil;
 	
-	import spark.components.Button;
-	import spark.components.HGroup;
-	import spark.components.TextArea;
-	import spark.components.TextInput;
-	import spark.components.VGroup;
+	import spark.components.*;
 	import spark.utils.TextFlowUtil;
 	
-	public class Chat extends VGroup implements ITab
+	public class Chat extends TabContainer implements ITab
 	{
 		private static const MAX_LINES:int = 30;
 		
@@ -50,7 +41,6 @@ package com.soueidan.games.lobby.components
 			
 			_server.addEventListener(SFSEvent.PUBLIC_MESSAGE, publicMessage);
 			
-			percentWidth = 100;
 			initialize();
 		}
 		
@@ -80,7 +70,7 @@ package com.soueidan.games.lobby.components
 			if ( !_submit ) {
 				_submit = new Button();
 				_submit.percentWidth = 15;
-				_submit.label = "Send";
+				_submit.label = ResourceManager.getString("chat.send");
 				_form.addElement(_submit);
 			}
 		}
