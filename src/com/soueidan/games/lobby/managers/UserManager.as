@@ -1,7 +1,9 @@
 package com.soueidan.games.lobby.managers
 {	
 	import com.smartfoxserver.v2.entities.SFSUser;
+	import com.smartfoxserver.v2.entities.User;
 	import com.soueidan.games.lobby.core.PermissionProfile;
+	import com.soueidan.games.lobby.core.StatusProfile;
 
 	public class UserManager
 	{		
@@ -40,6 +42,11 @@ package com.soueidan.games.lobby.managers
 		public static function timesPlayed(user:SFSUser):Number
 		{
 			return UserManager.win(user) + UserManager.loss(user);
+		}
+		
+		public static function isReady(user:User):Boolean
+		{
+			return ( user.getVariable("status").getBoolValue() == StatusProfile.readyToPlay );
 		}
 	}
 }

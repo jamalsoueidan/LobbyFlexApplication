@@ -1,11 +1,15 @@
-package com.soueidan.games.lobby.components
+package com.soueidan.games.lobby.components.invitations
 {
 	import com.smartfoxserver.v2.entities.SFSUser;
 	import com.smartfoxserver.v2.entities.UserPrivileges;
+	import com.soueidan.games.lobby.components.users.UserVersus;
 	import com.soueidan.games.lobby.events.InviteEvent;
+	import com.soueidan.games.lobby.managers.ApplicationManager;
 	import com.soueidan.games.lobby.managers.UserManager;
 	
 	import flash.events.MouseEvent;
+	import flash.utils.Timer;
+	import flash.utils.setInterval;
 	
 	import mx.events.CloseEvent;
 	import mx.managers.PopUpManager;
@@ -14,9 +18,8 @@ package com.soueidan.games.lobby.components
 	import spark.components.HGroup;
 	import spark.components.TitleWindow;
 	import spark.layouts.VerticalLayout;
-	import com.soueidan.games.lobby.components.users.UserVersus;
 	
-	public class InviteRequest extends TitleWindow
+	public class InvitationPopupWindow extends TitleWindow
 	{
 		private var _profile:HGroup;
 		
@@ -28,17 +31,15 @@ package com.soueidan.games.lobby.components
 		
 		private var _inviteChanged:Boolean;
 		
-		private var _buttons:HGroup;
+		protected var _buttons:HGroup;
 		
-		static private const ACCEPT:String = "accept";
-		static private const REFUSE:String = "refuse";
-		static private const CANCEL:String = "cancel";
+		private var _timer:Timer;
 		
-		private var _accept:Button;
-		private var _refuse:Button;
-		private var _cancel:Button;
+		static protected const ACCEPT:String = "accept";
+		static protected const REFUSE:String = "refuse";
+		static protected const CANCEL:String = "cancel";
 		
-		public function InviteRequest()
+		public function InvitationPopupWindow()
 		{
 			super();
 			
@@ -49,10 +50,6 @@ package com.soueidan.games.lobby.components
 			
 			layout = verticalLayout;
 			
-			setStyle("verticalCenter", 0);
-			setStyle("horizontalCenter", 0);
-			
-			addEventListener(CloseEvent.CLOSE, closedWindow);
 			addEventListener(MouseEvent.CLICK, clickedButton);
 		}
 		
@@ -64,29 +61,19 @@ package com.soueidan.games.lobby.components
 			}
 			
 			var responseEvent:InviteEvent = new InviteEvent(InviteEvent.ACTION);
+			responseEvent.action = InviteEvent.CANCEL
+				
 			var button:Button = event.target as Button;
-			if ( button.label == ACCEPT ) {
+			
+			if ( button.id == ACCEPT ) {
 				responseEvent.action = InviteEvent.ACCEPT;
 			}
 			
-			if ( button.label == REFUSE ) {
+			if ( button.id == REFUSE ) {
 				responseEvent.action = InviteEvent.REFUSE;
 			}
 			
-			if ( button.label == CANCEL ) {
-				responseEvent.action = InviteEvent.CANCEL;
-			}
-			
 			dispatchEvent(responseEvent);
-			PopUpManager.removePopUp(this);
-		}
-		
-		protected function closedWindow(event:CloseEvent):void
-		{
-			var responeEvent:InviteEvent = new InviteEvent(InviteEvent.ACTION);
-			responeEvent.action = InviteEvent.CANCEL;
-			dispatchEvent(responeEvent);
-			PopUpManager.removePopUp(this);
 		}
 		
 		override protected function createChildren():void {
@@ -109,6 +96,8 @@ package com.soueidan.games.lobby.components
 			
 			if ( !_buttons ) {
 				_buttons = new HGroup();
+				_buttons.percentWidth = 100;
+				_buttons.horizontalAlign = "center";
 				addElement(_buttons);
 			}
 		}
@@ -117,79 +106,12 @@ package com.soueidan.games.lobby.components
 			if ( _inviteChanged ) {
 				_inviteChanged = false;
 				
-				if ( _inviterProfile && _inviter ) {
-					_inviterProfile.user = _inviter;
-					
-					if ( _inviter.isItMe ) {
-						removeAcceptAndRejectButtons();	
-						addCancelButton();
-					} else {
-						addAcceptAndRejectButtons();
-						removeCancelButton();
-					}
-				}
-				
-				if ( _inviteeProfile && _invitee ) {
-					_inviteeProfile.user = _invitee;
-					
-					if ( _invitee.isItMe ) {
-						addAcceptAndRejectButtons();
-						removeCancelButton();
-					}
-				}
+				_inviterProfile.user = _inviter;
+				_inviteeProfile.user = _invitee;
 			}
 			
 			super.commitProperties();
 		}
-		
-		private function removeCancelButton():void
-		{
-			if (_cancel && contains(_cancel) ){
-				_buttons.removeElement(_cancel);
-			}
-		}
-		
-		private function addCancelButton():void
-		{
-			if (!_cancel ) {
-				_cancel = new Button();
-				_cancel.label = CANCEL;
-			}
-			
-			_buttons.addElement(_cancel);
-		}
-		
-		private function addAcceptAndRejectButtons():void
-		{
-			if ( !_accept ) {
-				_accept = new Button();
-				_accept.label = ACCEPT;
-			}
-			
-			if ( !contains(_accept) ) {
-				_buttons.addElement(_accept);
-			}
-			
-			if ( !_refuse ) {
-				_refuse = new Button();
-				_refuse.label = REFUSE;
-			}
-			
-			if ( !contains(_refuse) ) {
-				_buttons.addElement(_refuse);
-			}
-		}
-		
-		private function removeAcceptAndRejectButtons():void {
-			if ( _accept && contains(_accept)) {
-				_buttons.removeElement(_accept);
-			}
-			
-			if ( _refuse && contains(_refuse)) {
-				_buttons.removeElement(_refuse);
-			}
-		}
-		
 		
 		public function set inviter(user:SFSUser):void {
 			_inviter = user;
@@ -201,6 +123,15 @@ package com.soueidan.games.lobby.components
 			_invitee = user;
 			_inviteChanged = true;
 			invalidateProperties();
+		}
+		
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+
+			x = ApplicationManager.getInstance().width/2 - getExplicitOrMeasuredWidth()/2;
+			y = ApplicationManager.getInstance().height/2 - getExplicitOrMeasuredHeight()/2;
+
+			
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
 		}
 	}
 }

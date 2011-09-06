@@ -23,7 +23,7 @@ package com.soueidan.games.lobby.components.users
 			
 			if (!_lastGroup ) {
 				_lastGroup = new VGroup();
-				_lastGroup.horizontalAlign = (ResourceManager.isLocale("ar") ? "left" : "right");
+				_lastGroup.horizontalAlign = "right";
 				_lastGroup.verticalAlign = "bottom";
 				_textGroup.percentWidth = 80;
 				_lastGroup.percentWidth = 20;

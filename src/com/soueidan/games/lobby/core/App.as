@@ -48,7 +48,7 @@ package com.soueidan.games.lobby.core
 				
 			if ( !_entrance ) {
 				_entrance = new Entrance();
-			}			
+			}
 			
 			if ( !_urlLoader ) {
 				_urlLoader = new URLLoader();
@@ -57,7 +57,7 @@ package com.soueidan.games.lobby.core
 			}
 		}
 		
-		private var _timer:Timer;
+
 		private function configurationFileReady(event:Event):void
 		{
 			trace("setup configuration");
@@ -67,45 +67,27 @@ package com.soueidan.games.lobby.core
 			_server.addEventListener(SFSEvent.CONNECTION_RESUME, lostConnection);
 			_server.addEventListener(SFSEvent.CONNECTION_RETRY, lostConnection);
 			_server.addEventListener(SFSEvent.ROOM_JOIN, roomJoined);
-			_server.addEventListener(SFSEvent.INVITATION_REPLY, invitationReply);
+			
 			_server.addResponseHandler(CreateRoomResponse.CREATE_ROOM, CreateRoomResponse);
 			_server.start(_urlLoader.data);
 			
-			_timer = new Timer(1000,1000);
-			_timer.start();
+			//private var _timer:Timer;
+			/*_timer = new Timer(1000,1000);
+			_timer.start();*/
 		}
 		
 		private function lostConnection(event:SFSEvent):void
 		{
-			trace(_timer.currentCount);
+			
+			//trace(_timer.currentCount);
 			trace(event.type);
 		}
 		
 		private function roomJoined(evt:SFSEvent):void
 		{	
-			trace("room joined");
+			trace("roomjoined");
 			addElement(_entrance);
 			_server.removeEventListener(SFSEvent.ROOM_JOIN, roomJoined);
-		}
-		
-		protected function invitationReply(event:SFSEvent):void
-		{
-			if ( event.params.reply != InvitationReply.ACCEPT ) {
-				return;
-			}
-						
-			var params:ISFSObject = new SFSObject();
-			
-			// set all players
-			var users:ISFSArray = new SFSArray();
-			users.addInt(event.params.invitee.id);
-			params.putSFSArray("users", users);
-			
-			// set game id
-			params.putInt("game_id", _server.gameId);
-			
-			var extensionRequest:ExtensionRequest = new ExtensionRequest(CreateRoomResponse.CREATE_ROOM, params);
-			_server.send(extensionRequest);
 		}		
 	}
 }

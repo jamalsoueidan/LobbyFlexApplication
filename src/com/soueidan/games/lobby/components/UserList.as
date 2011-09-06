@@ -23,6 +23,7 @@ package com.soueidan.games.lobby.components
 	import spark.components.*;
 	import spark.layouts.VerticalLayout;
 	import com.soueidan.games.lobby.components.users.UserPlayer;
+	import com.soueidan.games.lobby.components.invitations.InvitationPopupWindow;
 	
 	public class UserList extends Panel
 	{
@@ -31,7 +32,7 @@ package com.soueidan.games.lobby.components
 		private var _server:Connector = ConnectManager.getInstance();
 		
 		private var _list:Array = [];
-		private var _inviteRequest:InviteRequest;
+		private var _inviteRequest:InvitationPopupWindow;
 		
 		public function UserList()
 		{
