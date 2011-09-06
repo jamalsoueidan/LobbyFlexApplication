@@ -22,7 +22,7 @@ package com.soueidan.games.lobby.components.users
 		
 		private var _status:Image;
 		private var _statusChanged:Boolean;
-		private var _currentStatus:int;
+		private var _currentStatus:int = 0;
 		
 		private var _cache:ContentCache = new ContentCache();
 		private var _image:Image;
@@ -60,6 +60,7 @@ package com.soueidan.games.lobby.components.users
 			
 			if ( !_image ) {
 				_image = new Image();
+				_image.width = _image.height = 48;
 				_image.contentLoader = _cache;
 				addElement(_image);
 			}
@@ -92,7 +93,6 @@ package com.soueidan.games.lobby.components.users
 			if ( !_status ) {
 				_status = new Image();
 				_status.toolTip = ResourceManager.getString("status.ready");
-				_currentStatus = 1;
 				_status.source = _statusReady;
 				_nicknameGroup.addElement(_status);
 			}
@@ -133,19 +133,22 @@ package com.soueidan.games.lobby.components.users
 				_timesPlayed.text = ResourceManager.getString("user.times_played") + ": " + UserManager.timesPlayed(_sfsUser).toString();
 			}
 			
-			updateStatus();
+			if ( _statusChanged ) {
+				_statusChanged = false;
+				updateStatus();
+			}
 			
 			super.commitProperties();
 		}
 		
 		private function updateStatus():void
 		{
-			var userVar:UserVariable = _sfsUser.getVariable("status");
-			if ( _currentStatus == userVar.getIntValue() ) {
+			var status:int = _sfsUser.getVariable("status").getIntValue();
+			if ( _currentStatus == status ) {
 				return;
 			}
 			
-			_currentStatus = userVar.getIntValue();
+			_currentStatus = status;
 			
 			if ( _currentStatus == StatusProfile.readyToPlay ) {
 				_status.toolTip = ResourceManager.getString("status.ready");
@@ -159,6 +162,7 @@ package com.soueidan.games.lobby.components.users
 		}
 		
 		public function update():void {
+			_statusChanged = true;
 			invalidateProperties();
 		}
 	}
