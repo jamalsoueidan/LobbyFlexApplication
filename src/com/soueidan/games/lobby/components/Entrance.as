@@ -1,7 +1,9 @@
 package com.soueidan.games.lobby.components
 {
 	import com.smartfoxserver.v2.entities.SFSUser;
+	import com.soueidan.games.lobby.components.users.UserProfile;
 	import com.soueidan.games.lobby.core.*;
+	import com.soueidan.games.lobby.core.invite.InviteHandler;
 	import com.soueidan.games.lobby.interfaces.ITab;
 	import com.soueidan.games.lobby.managers.*;
 	
@@ -14,7 +16,6 @@ package com.soueidan.games.lobby.components
 	import spark.components.*;
 	import spark.events.IndexChangeEvent;
 	import spark.layouts.VerticalLayout;
-	import com.soueidan.games.lobby.components.users.UserProfile;
 
 	public class Entrance extends VGroup
 	{
