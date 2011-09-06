@@ -66,9 +66,9 @@ package com.soueidan.games.lobby.components.users
 			super.update();
 			
 			if ( UserManager.isReady(_sfsUser) ) {
-				if (_lastGroup.containsElement(_invite)) _lastGroup.removeElement(_invite);
-			} else {
 				if (!_lastGroup.containsElement(_invite)) _lastGroup.addElement(_invite);
+			} else {
+				if (_lastGroup.containsElement(_invite)) _lastGroup.removeElement(_invite);
 			}
 			
 			invalidateProperties();

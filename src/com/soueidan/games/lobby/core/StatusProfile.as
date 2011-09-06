@@ -19,8 +19,5 @@ package com.soueidan.games.lobby.core
 		public static function get doNotDistrub():int {
 			return 1;
 		}
-		
-		
-		
 	}
 }
