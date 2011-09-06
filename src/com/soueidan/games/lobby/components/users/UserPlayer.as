@@ -1,6 +1,7 @@
 package com.soueidan.games.lobby.components.users
 {
 	import com.soueidan.games.lobby.managers.ResourceManager;
+	import com.soueidan.games.lobby.managers.UserManager;
 	
 	import spark.components.Button;
 	import spark.components.VGroup;
@@ -30,6 +31,11 @@ package com.soueidan.games.lobby.components.users
 				addElement(_lastGroup);
 			}
 			
+			addButtons();
+		}
+		
+		private function addButtons():void
+		{
 			if (!_stats ) {
 				_stats = new Button();
 				_stats.id = "stats";
@@ -43,15 +49,29 @@ package com.soueidan.games.lobby.components.users
 				_invite.label = "Invite";
 				_lastGroup.addElement(_invite);
 			}
+			
+			update();
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
-			super.updateDisplayList(unscaledWidth, unscaledHeight);
-			
 			graphics.clear();
 			graphics.lineStyle(1,0x000);
 			graphics.moveTo(0,unscaledHeight);
 			graphics.lineTo(unscaledWidth,unscaledHeight);
+			
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
+		}
+		
+		override public function update():void {
+			super.update();
+			
+			if ( UserManager.isReady(_sfsUser) ) {
+				if (_lastGroup.containsElement(_invite)) _lastGroup.removeElement(_invite);
+			} else {
+				if (!_lastGroup.containsElement(_invite)) _lastGroup.addElement(_invite);
+			}
+			
+			invalidateProperties();
 		}
 	}
 }
