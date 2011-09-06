@@ -66,6 +66,7 @@ package com.soueidan.games.lobby.components.users
 			
 			if ( !_textGroup ) {
 				_textGroup = new VGroup();
+				_textGroup.percentWidth = 100;
 				addElement(_textGroup);
 			}
 			
@@ -126,7 +127,6 @@ package com.soueidan.games.lobby.components.users
 				_timesPlayed.text = UserManager.privilege(_sfsUser);	
 				_image.source = UserManager.avatar(_sfsUser);
 				_vipImage.source = _vipImageClass;
-				
 				
 				_win.text = ResourceManager.getString("user.win") + ": " + UserManager.win(_sfsUser).toString();
 				_loss.text = ResourceManager.getString("user.loss") + ": " + UserManager.loss(_sfsUser).toString();
