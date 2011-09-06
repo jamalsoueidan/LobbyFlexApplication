@@ -17,9 +17,10 @@ package com.soueidan.games.lobby.components
 	import mx.utils.StringUtil;
 	
 	import spark.components.*;
+	import spark.layouts.VerticalLayout;
 	import spark.utils.TextFlowUtil;
 	
-	public class Chat extends TabContainer implements ITab
+	public class Chat extends Panel implements ITab
 	{
 		private static const MAX_LINES:int = 30;
 		
@@ -39,22 +40,38 @@ package com.soueidan.games.lobby.components
 		{
 			super();
 			
-			_server.addEventListener(SFSEvent.PUBLIC_MESSAGE, publicMessage);
+			setStyle("paddingTop", 0);
+			setStyle("paddingLeft", 0);
+			setStyle("paddingBottom", 0);
+			setStyle("paddingRight", 0);
 			
-			initialize();
+			setStyle("dropShadowVisible", false);
+			
+			title = ResourceManager.getString("entrance.chat");
+			
+			var vertial:VerticalLayout = new VerticalLayout();
+			vertial.gap = 0;			
+			layout = vertial;
+			
+			_server.addEventListener(SFSEvent.PUBLIC_MESSAGE, publicMessage);
 		}
 		
 		override protected function createChildren():void {
+			super.createChildren();
+			
 			if ( !_textArea ) {
 				_textArea = new TextArea();
+				_textArea.setStyle("borderVisible", false);
+				_textArea.numChildren
 				_textArea.percentWidth = 100;
-				_textArea.height = 300;
+				_textArea.percentHeight = 100;
 				addElement(_textArea);
 			}
 			
 			if ( !_form ) {
 				_form = new HGroup();
 				_form.percentWidth = 100;
+				_form.paddingLeft = _form.paddingRight = _form.paddingBottom = 5;
 				addElement(_form);
 			}
 			
@@ -63,16 +80,20 @@ package com.soueidan.games.lobby.components
 				if ( ResourceManager.getString("direction") == Direction.RTL ) {
 					_textInput.setStyle("textAlign", "right");
 				}
-				_textInput.percentWidth = 85;
+				_textInput.percentWidth = 75;
 				_form.addElement(_textInput);
 			}
 			
 			if ( !_submit ) {
 				_submit = new Button();
-				_submit.percentWidth = 15;
+				_submit.percentWidth = 25;
 				_submit.label = ResourceManager.getString("chat.send");
 				_form.addElement(_submit);
 			}
+			
+			(titleDisplay as Label).setStyle("textAlign", ResourceManager.getString("left"));
+			
+			show();
 		}
 		
 		public function show():void {

@@ -19,7 +19,7 @@ package com.soueidan.games.lobby.components
 	public class Entrance extends VGroup
 	{
 		
-		private static const FIRST_COLUMN_WIDTH:int = 220;
+		private static const FIRST_COLUMN_WIDTH:int = 300;
 		private static const SECOND_COLUMN_WIDTH:int = 100;
 		
 		private var _top:HGroup;
@@ -28,9 +28,6 @@ package com.soueidan.games.lobby.components
 		private var _bottom:HGroup;
 		
 		private var _userList:UserList;
-		
-		private var _tabs:ButtonBar;
-		private var _tabsContainer:VGroup;
 		
 		private var _roomList:ITab;
 		private var _chatList:ITab;
@@ -68,68 +65,22 @@ package com.soueidan.games.lobby.components
 			
 			if ( !_bottom ) {
 				_bottom = new HGroup();
-				_bottom.percentWidth = 100;
+				_bottom.percentWidth = _bottom.percentHeight = 100;
 				addElement(_bottom);
-			}
-			
-			if ( !_userList ) {
-				_userList = new UserList();
-				_userList.width = FIRST_COLUMN_WIDTH;
-				_bottom.addElement(_userList);
-			}
-			
-			if (!_tabsContainer ) {
-				_tabsContainer = new VGroup();
-				_tabsContainer.gap = 0;
-				_tabsContainer.percentWidth = SECOND_COLUMN_WIDTH;
-				_bottom.addElement(_tabsContainer);
-			}
-			
-			if ( !_tabs ) {
-				_tabs = new ButtonBar();
-				_tabs.addEventListener(IndexChangeEvent.CHANGING, tabIndexChanged);
-				_tabs.dataProvider = new ArrayCollection();
-				_tabs.dataProvider.addItem(ResourceManager.getString("entrance.rooms"));
-				_tabs.dataProvider.addItem(ResourceManager.getString("entrance.chat"));
-				_tabs.requireSelection = true;
-				_tabsContainer.addElement(_tabs);
-			}
-			
-			if ( !_roomList ) {
-				_roomList = new RoomList();
-				_tabsContainer.addElement(_roomList);	
 			}
 			
 			if ( !_chatList ) {
 				_chatList = new Chat();
-			}
-		}
-		
-		private function tabIndexChanged(event:IndexChangeEvent):void
-		{
-			if ( _tabs.selectedIndex == 0 ) {
-				if ( !_tabsContainer.containsElement(_roomList) ) {
-					_roomList.show();
-					_tabsContainer.addElement(_roomList);	
-				}
-			} else {
-				if ( _tabsContainer.containsElement(_roomList) ) {
-					_tabsContainer.removeElement(_roomList);
-					_roomList.hide();
-				}
+				_chatList.width = FIRST_COLUMN_WIDTH;
+				_chatList.percentHeight = 100;
+				_bottom.addElement(_chatList);
 			}
 			
-			if ( _tabs.selectedIndex == 1 ) {
-				if ( !_tabsContainer.containsElement(_chatList) ) {
-					_chatList.show();
-					_tabsContainer.addElement(_chatList);	
-				}
-			} else {
-				if ( _tabsContainer.containsElement(_chatList) ) {
-					_tabsContainer.removeElement(_chatList);	
-					_chatList.hide();
-				}
-			}
+			if ( !_userList ) {
+				_userList = new UserList();
+				_userList.percentWidth = _userList.percentHeight = 100;
+				_bottom.addElement(_userList);
+			}	
 		}
 	}
 }

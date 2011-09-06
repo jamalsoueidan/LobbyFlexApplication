@@ -14,7 +14,7 @@ package com.soueidan.games.lobby.components
 		{
 			super();
 			
-			percentWidth = 100;
+			percentHeight = 100;
 			
 			paddingTop = 10;
 			paddingLeft = 10;
@@ -28,18 +28,19 @@ package com.soueidan.games.lobby.components
 			g.lineStyle(0, 0x000);
 			if ( ResourceManager.getString("direction") == Direction.LTR ) {
 				g.lineTo(0,0);
-				g.lineTo(0,unscaledHeight);
-				g.lineTo(unscaledWidth-1,unscaledHeight);
+				g.lineTo(0,unscaledHeight-1);
+				g.lineTo(unscaledWidth-1,unscaledHeight-1);
 				g.lineTo(unscaledWidth-1,-1);
 				g.lineTo(0,-1);
 			} else {
 				g.lineStyle(1,0x000);
 				g.lineTo(1,-1);
-				g.lineTo(1,unscaledHeight);
-				g.lineTo(unscaledWidth,unscaledHeight);
+				g.lineTo(1,unscaledHeight-1);
+				g.lineTo(unscaledWidth,unscaledHeight-1);
 				g.lineTo(unscaledWidth,-1);
 				g.lineTo(1,-1);
 			}
+			
 			
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 		}
