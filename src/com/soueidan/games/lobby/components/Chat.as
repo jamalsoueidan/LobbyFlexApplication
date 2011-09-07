@@ -83,7 +83,7 @@ package com.soueidan.games.lobby.components
 			if ( !_textArea ) {
 				_textArea = new TextArea();
 				_textArea.setStyle("borderVisible", false);
-				_textArea.selectable = false;
+				_textArea.editable = _textArea.selectable = false;
 				_textArea.percentWidth = 100;
 				_textArea.percentHeight = 100;
 				addElement(_textArea);
