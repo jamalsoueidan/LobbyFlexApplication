@@ -11,9 +11,11 @@ package com.soueidan.games.lobby.core.invite
 	import com.soueidan.games.lobby.managers.ApplicationManager;
 	import com.soueidan.games.lobby.managers.ConnectManager;
 	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.utils.getTimer;
 	
+	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
 
 	public class SentInvite extends InviteBase
@@ -43,8 +45,7 @@ package com.soueidan.games.lobby.core.invite
 		public function send():void {				
 			_server.send(new InviteUsersRequest([invitee], 12, null));
 		
-			PopUpManager.addPopUp(popup, ApplicationManager.getInstance(), true);
-			PopUpManager.centerPopUp(popup);
+			PopUpManager.addPopUp(popup, FlexGlobals.topLevelApplication as DisplayObject, true);
 		}
 		
 		public function close():void {

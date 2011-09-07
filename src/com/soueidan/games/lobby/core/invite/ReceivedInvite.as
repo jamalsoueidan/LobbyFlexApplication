@@ -8,9 +8,13 @@ package com.soueidan.games.lobby.core.invite
 	import com.soueidan.games.lobby.events.InviteEvent;
 	import com.soueidan.games.lobby.managers.ApplicationManager;
 	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
+	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
+	
+	import spark.components.Application;
 
 	public class ReceivedInvite extends InviteBase
 	{
@@ -28,8 +32,7 @@ package com.soueidan.games.lobby.core.invite
 		
 		public function show():void
 		{
-			PopUpManager.addPopUp(popup, ApplicationManager.getInstance(), true);
-			PopUpManager.centerPopUp(popup);
+			PopUpManager.addPopUp(popup, FlexGlobals.topLevelApplication  as DisplayObject, true);
 		}
 		
 		public function kill():void

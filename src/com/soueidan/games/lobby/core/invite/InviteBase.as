@@ -42,6 +42,7 @@ package com.soueidan.games.lobby.core.invite
 				_popup.addEventListener(InviteEvent.ACTION, closedInvitationPopupWindow, false,0, true);
 				_popup.invitee = _invitee;
 				_popup.inviter = _inviter;
+				_popup.initialize();
 			}
 			
 			return _popup;

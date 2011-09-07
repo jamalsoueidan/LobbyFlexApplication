@@ -14,11 +14,11 @@ package com.soueidan.games.lobby.components.users
 	
 	public class UserBase extends HGroup
 	{
-		[Embed(source="assets/status/151.png")] 
-		private var _statusDisturb:Class;
+		/*[Embed(source="assets/status/151.png")] 
+		private var _statusDisturb:Class;*/
 		
-		[Embed(source="assets/status/152.png")] 
-		private var _statusReady:Class;
+		/*[Embed(source="assets/status/152.png")] 
+		private var _statusReady:Class;*/
 		
 		private var _status:Image;
 		private var _statusChanged:Boolean;
@@ -30,8 +30,8 @@ package com.soueidan.games.lobby.components.users
 		protected var _nicknameGroup:HGroup;
 		private var _nickname:Label;
 		
-		[Embed(source="assets/032.png")] 
-		private var _vipImageClass:Class;
+		/*[Embed(source="assets/032.png")] 
+		private var _vipImageClass:Class;*/
 		private var _vipImage:Image;
 		
 		private var _timesPlayed:Label;
@@ -92,7 +92,7 @@ package com.soueidan.games.lobby.components.users
 			if ( !_status ) {
 				_status = new Image();
 				_status.toolTip = ResourceManager.getString("status.ready");
-				_status.source = _statusReady;
+				_status.source = '/images/status/152.png';
 				_nicknameGroup.addElement(_status);
 			}
 			
@@ -127,7 +127,7 @@ package com.soueidan.games.lobby.components.users
 				_image.source = UserManager.avatar(_sfsUser);
 				
 				if ( UserManager.isVip(_sfsUser)) {
-					_vipImage.source = _vipImageClass;
+					_vipImage.source = "/images/vip.png";
 					_nicknameGroup.addElement(_vipImage);
 				}
 				
@@ -155,12 +155,12 @@ package com.soueidan.games.lobby.components.users
 			
 			if ( _currentStatus == StatusProfile.readyToPlay ) {
 				_status.toolTip = ResourceManager.getString("status.ready");
-				_status.source = _statusReady;	
+				_status.source = '/images/status/152.png';	
 			}
 			
 			if ( _currentStatus == StatusProfile.doNotDistrub) {
 				_status.toolTip = ResourceManager.getString("status.disturb");
-				_status.source = _statusDisturb;
+				_status.source = '/images/status/151.png';
 			}
 		}
 		

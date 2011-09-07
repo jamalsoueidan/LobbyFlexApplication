@@ -50,6 +50,8 @@ package com.soueidan.games.lobby.components.invitations
 			
 			layout = verticalLayout;
 			
+			visible = false;
+			
 			addEventListener(MouseEvent.CLICK, clickedButton);
 		}
 		
@@ -125,12 +127,16 @@ package com.soueidan.games.lobby.components.invitations
 			invalidateProperties();
 		}
 		
-		/*override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
-
-			x = ApplicationManager.getInstance().width/2 - getExplicitOrMeasuredWidth()/2;
-			y = ApplicationManager.getInstance().height/2 - getExplicitOrMeasuredHeight()/2;
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+			
+			if ( !visible ) {
+				x = ApplicationManager.getInstance().width/2 - getExplicitOrMeasuredWidth()/2;
+				y = ApplicationManager.getInstance().height/2 - getExplicitOrMeasuredHeight()/2;
+				
+				visible = true;
+			}
 
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
-		}*/
+		}
 	}
 }
