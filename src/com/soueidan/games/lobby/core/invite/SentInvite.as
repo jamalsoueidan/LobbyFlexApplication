@@ -30,7 +30,7 @@ package com.soueidan.games.lobby.core.invite
 		}
 		
 		override protected function closedInvitationPopupWindow(event:InviteEvent):void {
-			PopUpManager.removePopUp(popup);
+			popup.hide();
 			
 			var params:ISFSObject = new SFSObject();
 			params.putInt("invitee_id", invitee.id);
@@ -45,12 +45,13 @@ package com.soueidan.games.lobby.core.invite
 		public function send():void {				
 			_server.send(new InviteUsersRequest([invitee], 12, null));
 		
-			PopUpManager.addPopUp(popup, FlexGlobals.topLevelApplication as DisplayObject, true);
+			popup.show();
 		}
 		
 		public function close():void {
 			_popup.removeEventListener(InviteEvent.ACTION, closedInvitationPopupWindow);
-			PopUpManager.removePopUp(popup);
+			
+			popup.hide();
 		}
 	}
 }

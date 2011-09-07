@@ -126,7 +126,7 @@ package com.soueidan.games.lobby.core.invite
 			}
 			
 			if ( _receivedInvite ) {
-				_receivedInvite.kill();
+				_receivedInvite.hide();
 				_receivedInvite = null;
 			}
 			

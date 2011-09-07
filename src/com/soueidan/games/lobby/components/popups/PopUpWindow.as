@@ -1,7 +1,10 @@
 package com.soueidan.games.lobby.components.popups
 {
+	import com.soueidan.games.lobby.core.App;
 	import com.soueidan.games.lobby.managers.ApplicationManager;
 	import com.soueidan.games.lobby.managers.ResourceManager;
+	
+	import mx.managers.PopUpManager;
 	
 	import spark.components.Label;
 	import spark.components.TitleWindow;
@@ -9,6 +12,8 @@ package com.soueidan.games.lobby.components.popups
 	
 	public class PopUpWindow extends TitleWindow
 	{
+		private var _visible:Boolean = false;
+		
 		public function PopUpWindow()
 		{
 			super();
@@ -17,10 +22,7 @@ package com.soueidan.games.lobby.components.popups
 			verticalLayout.paddingBottom = verticalLayout.paddingLeft = verticalLayout.paddingRight = verticalLayout.paddingTop = 10;
 			verticalLayout.horizontalAlign = "center";
 			
-			layout = verticalLayout;
-			
-			visible = false;
-			
+			layout = verticalLayout;			
 		}
 		
 		override protected function createChildren():void {
@@ -31,13 +33,29 @@ package com.soueidan.games.lobby.components.popups
 			}
 		}
 		
+		public function show():void {
+			var app:App = ApplicationManager.getInstance();
+			_visible = true;
+			x = -1000;
+			app.addElement(this);
+			app.removeElement(this);
+			_visible = false;
+			invalidateDisplayList();
+			
+			PopUpManager.addPopUp(this, app, true);
+		}
+		
+		public function hide():void {
+			PopUpManager.removePopUp(this);
+		}
+		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
 			
-			if ( !visible ) {
+			if ( !_visible ) {
 				x = ApplicationManager.getInstance().width/2 - getExplicitOrMeasuredWidth()/2;
 				y = ApplicationManager.getInstance().height/2 - getExplicitOrMeasuredHeight()/2;
 				
-				visible = true;
+				_visible = true;
 			}
 			
 			super.updateDisplayList(unscaledWidth, unscaledHeight);

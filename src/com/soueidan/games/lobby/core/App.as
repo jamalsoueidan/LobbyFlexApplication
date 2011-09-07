@@ -5,6 +5,7 @@ package com.soueidan.games.lobby.core
 	import com.smartfoxserver.v2.entities.invitation.InvitationReply;
 	import com.smartfoxserver.v2.requests.ExtensionRequest;
 	import com.soueidan.games.lobby.components.*;
+	import com.soueidan.games.lobby.components.popups.ConnectionLostPopUpWindow;
 	import com.soueidan.games.lobby.events.*;
 	import com.soueidan.games.lobby.managers.*;
 	import com.soueidan.games.lobby.responses.CreateRoomResponse;
@@ -13,6 +14,9 @@ package com.soueidan.games.lobby.core
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.utils.Timer;
+	import flash.utils.setInterval;
+	
+	import mx.managers.PopUpManager;
 	
 	import spark.components.*;
 	import spark.events.*;
@@ -64,8 +68,6 @@ package com.soueidan.games.lobby.core
 			_server = ConnectManager.getInstance();
 			_server.parameters = _parameters;
 			_server.addEventListener(SFSEvent.CONNECTION_LOST, lostConnection);
-			_server.addEventListener(SFSEvent.CONNECTION_RESUME, lostConnection);
-			_server.addEventListener(SFSEvent.CONNECTION_RETRY, lostConnection);
 			_server.addEventListener(SFSEvent.ROOM_JOIN, roomJoined);
 			
 			_server.addResponseHandler(CreateRoomResponse.CREATE_ROOM, CreateRoomResponse);
@@ -74,18 +76,16 @@ package com.soueidan.games.lobby.core
 			//private var _timer:Timer;
 			/*_timer = new Timer(1000,1000);
 			_timer.start();*/
+			
 		}
 		
-		private function lostConnection(event:SFSEvent):void
-		{
-			
-			//trace(_timer.currentCount);
-			trace(event.type);
+		private function lostConnection(event:SFSEvent=null):void {
+			var popup:ConnectionLostPopUpWindow = new ConnectionLostPopUpWindow();
+			popup.show();
 		}
 		
 		private function roomJoined(evt:SFSEvent):void
 		{	
-			trace("roomjoined");
 			addElement(_entrance);
 			_server.removeEventListener(SFSEvent.ROOM_JOIN, roomJoined);
 		}		

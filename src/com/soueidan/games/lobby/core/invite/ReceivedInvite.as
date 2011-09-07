@@ -30,14 +30,12 @@ package com.soueidan.games.lobby.core.invite
 			_inviter = invitation.inviter as SFSUser;
 		}
 		
-		public function show():void
-		{
-			PopUpManager.addPopUp(popup, FlexGlobals.topLevelApplication  as DisplayObject, true);
+		public function show():void {
+			popup.show();
 		}
 		
-		public function kill():void
-		{
-			PopUpManager.removePopUp(popup);
+		public function hide():void {
+			popup.hide();
 		}
 		
 		override protected function closedInvitationPopupWindow(event:InviteEvent):void {
