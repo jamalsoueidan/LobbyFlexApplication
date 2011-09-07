@@ -23,10 +23,11 @@ package com.soueidan.games.lobby.components.users
 			super.createChildren();
 			
 			if (!_lastGroup ) {
+				_textGroup.percentWidth = 80;
+				
 				_lastGroup = new VGroup();
 				_lastGroup.horizontalAlign = "right";
 				_lastGroup.verticalAlign = "bottom";
-				_textGroup.percentWidth = 80;
 				_lastGroup.percentWidth = 20;
 				addElement(_lastGroup);
 			}
@@ -40,7 +41,7 @@ package com.soueidan.games.lobby.components.users
 				_stats = new Button();
 				_stats.id = "stats";
 				_stats.label = "Stats";
-				_lastGroup.addElement(_stats);
+				//_lastGroup.addElement(_stats);
 			}
 			
 			if ( !_invite ) {
