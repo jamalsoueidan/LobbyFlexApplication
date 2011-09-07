@@ -53,7 +53,28 @@ package com.soueidan.games.lobby.components
 			vertial.gap = 0;			
 			layout = vertial;
 			
+			_server.addEventListener(SFSEvent.USER_ENTER_ROOM, userEnterRoom);
 			_server.addEventListener(SFSEvent.PUBLIC_MESSAGE, publicMessage);
+		}
+		
+		private function userEnterRoom(event:SFSEvent):void
+		{
+			var user:SFSUser = event.params.user;
+			
+			var name:String = user.name;
+			if ( UserManager.isVip(user)) {
+				name += ":vip:";
+			}
+			
+			var msg:String = name + " " + ResourceManager.getString("chat.msg");
+			if ( ResourceManager.isLocale("ar") ) {
+				msg = ResourceManager.getString("chat.msg") + " " + name;
+			}
+			
+			var color:String = "0x51d63c";
+			_texts.push('<p fontWeight="normal" fontSize="16"><span fontWeight="bold" color="' + color + '">' + ResourceManager.getString("chat.system") + ': </span><span  color="' + color + '">' + ChatManager.convertSmilies(msg, color) + '</span></p>');
+
+			updateTextArea();
 		}
 		
 		override protected function createChildren():void {
@@ -112,8 +133,33 @@ package com.soueidan.games.lobby.components
 			var user:SFSUser = event.params.sender;
 			var msg:String = event.params.message;
 			
-			_texts.push('<p fontWeight="bold"><span fontWeight="normal">' + user.name.toString() + ':</span><span color="0xFFFFFF">ا</span>' + SmiliesManager.convert(msg) + '</p>');
+			var fontSize:String = "13";
+			var color:String = "0x000000";
+			if ( user.isAdmin() ) {
+				color = "0xFF3504";
+				fontSize = "15";
+			}
 			
+			if ( user.isModerator() ) {
+				color = "0xf9be0a";
+				fontSize = "14";
+			}
+			
+			var name:String = user.name + "";
+			if ( UserManager.isVip(user)) {
+				name += ChatManager.convertSmilies(":vip:", color) + ": </span>";
+			} else {
+				name += ":</span>";
+			}
+			
+			
+			_texts.push('<p fontWeight="normal" fontSize="' + fontSize + '"><span fontWeight="bold" color="' + color + '">' + name + '<span color="0xFFFFFF">ا</span><span  color="' + color + '">' + ChatManager.convertSmilies(msg, color) + '</span></p>');
+
+			updateTextArea();
+		}	
+		
+		private function updateTextArea():void
+		{
 			if (_texts.length > MAX_LINES ) {
 				_texts.shift();
 			}
@@ -126,7 +172,8 @@ package com.soueidan.games.lobby.components
 			_textArea.textFlow = TextFlowUtil.importFromString(text);
 			_textArea.textFlow.direction = ResourceManager.getString("direction");
 			_textArea.textFlow.flowComposer.updateAllControllers();
-		}
+		}		
+		
 		
 		private function submitForm(event:MouseEvent=null):void
 		{

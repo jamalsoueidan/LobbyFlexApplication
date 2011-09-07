@@ -48,5 +48,9 @@ package com.soueidan.games.lobby.managers
 		{
 			return ( user.getVariable("status").getIntValue() == StatusProfile.readyToPlay );
 		}
+		
+		public static function isVip(user:SFSUser):Boolean {
+			return user.getVariable("vip").getBoolValue();
+		}
 	}
 }
