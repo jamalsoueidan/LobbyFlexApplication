@@ -85,9 +85,8 @@ package com.soueidan.games.lobby.components.users
 			
 			if (!_vipImage ) {
 				_vipImage = new Image();
-				_vipImage.toolTip = ResourceManager.getString("user.vip");
+				_vipImage.toolTip = ResourceManager.getString("user.vip");	
 				_vipImage.contentLoader = _cache;
-				_nicknameGroup.addElement(_vipImage);
 			}
 			
 			if ( !_status ) {
@@ -126,7 +125,11 @@ package com.soueidan.games.lobby.components.users
 				_nickname.text = _sfsUser.name;
 				_timesPlayed.text = UserManager.privilege(_sfsUser);	
 				_image.source = UserManager.avatar(_sfsUser);
-				_vipImage.source = _vipImageClass;
+				
+				if ( UserManager.isVip(_sfsUser)) {
+					_vipImage.source = _vipImageClass;
+					_nicknameGroup.addElement(_vipImage);
+				}
 				
 				_win.text = ResourceManager.getString("user.win") + ": " + UserManager.win(_sfsUser).toString();
 				_loss.text = ResourceManager.getString("user.loss") + ": " + UserManager.loss(_sfsUser).toString();

@@ -43,7 +43,8 @@ package com.soueidan.games.lobby.core.invite
 		public function send():void {				
 			_server.send(new InviteUsersRequest([invitee], 12, null));
 		
-			PopUpManager.addPopUp(popup, ApplicationManager.getInstance(), true);			
+			PopUpManager.addPopUp(popup, ApplicationManager.getInstance(), true);
+			PopUpManager.centerPopUp(popup);
 		}
 		
 		public function close():void {

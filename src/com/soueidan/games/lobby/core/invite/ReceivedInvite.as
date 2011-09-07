@@ -29,6 +29,7 @@ package com.soueidan.games.lobby.core.invite
 		public function show():void
 		{
 			PopUpManager.addPopUp(popup, ApplicationManager.getInstance(), true);
+			PopUpManager.centerPopUp(popup);
 		}
 		
 		public function kill():void

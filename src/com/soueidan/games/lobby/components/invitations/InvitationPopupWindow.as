@@ -125,13 +125,12 @@ package com.soueidan.games.lobby.components.invitations
 			invalidateProperties();
 		}
 		
-		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+		/*override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
 
 			x = ApplicationManager.getInstance().width/2 - getExplicitOrMeasuredWidth()/2;
 			y = ApplicationManager.getInstance().height/2 - getExplicitOrMeasuredHeight()/2;
 
-			
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
-		}
+		}*/
 	}
 }
