@@ -15,6 +15,7 @@ package com.soueidan.games.lobby.components.popups
 			
 			var verticalLayout:VerticalLayout = new VerticalLayout();
 			verticalLayout.paddingBottom = verticalLayout.paddingLeft = verticalLayout.paddingRight = verticalLayout.paddingTop = 10;
+			verticalLayout.horizontalAlign = "center";
 			
 			layout = verticalLayout;
 			
