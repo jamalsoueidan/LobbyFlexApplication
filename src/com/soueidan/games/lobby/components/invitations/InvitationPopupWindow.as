@@ -13,6 +13,8 @@ package com.soueidan.games.lobby.components.invitations
 	
 	public class InvitationPopupWindow extends PopUpWindow
 	{
+		public static const TIMER_COUNT:int = 15;
+		
 		private var _profile:HGroup;
 		
 		private var _inviterProfile:UserVersus;

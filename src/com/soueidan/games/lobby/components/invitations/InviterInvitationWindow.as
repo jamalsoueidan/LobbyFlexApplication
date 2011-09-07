@@ -32,7 +32,7 @@ package com.soueidan.games.lobby.components.invitations
 			
 			_buttons.addElement(_cancel);
 			
-			_timer = new Timer(1000, 10);
+			_timer = new Timer(1000, TIMER_COUNT);
 			_timer.addEventListener(TimerEvent.TIMER, timerDelay, false, 0, true);
 			_timer.addEventListener(TimerEvent.TIMER_COMPLETE, timerComplete, false, 0, true);
 			_timer.start();

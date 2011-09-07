@@ -43,7 +43,7 @@ package com.soueidan.games.lobby.core.invite
 		}
 		
 		public function send():void {				
-			_server.send(new InviteUsersRequest([invitee], 12, null));
+			_server.send(new InviteUsersRequest([invitee], (InvitationPopupWindow.TIMER_COUNT+2), null));
 		
 			popup.show();
 		}
