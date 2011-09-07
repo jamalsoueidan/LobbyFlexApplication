@@ -1,25 +1,17 @@
 package com.soueidan.games.lobby.components.invitations
 {
 	import com.smartfoxserver.v2.entities.SFSUser;
-	import com.smartfoxserver.v2.entities.UserPrivileges;
+	import com.soueidan.games.lobby.components.popups.PopUpWindow;
 	import com.soueidan.games.lobby.components.users.UserVersus;
 	import com.soueidan.games.lobby.events.InviteEvent;
-	import com.soueidan.games.lobby.managers.ApplicationManager;
-	import com.soueidan.games.lobby.managers.UserManager;
 	
 	import flash.events.MouseEvent;
 	import flash.utils.Timer;
-	import flash.utils.setInterval;
-	
-	import mx.events.CloseEvent;
-	import mx.managers.PopUpManager;
 	
 	import spark.components.Button;
 	import spark.components.HGroup;
-	import spark.components.TitleWindow;
-	import spark.layouts.VerticalLayout;
 	
-	public class InvitationPopupWindow extends TitleWindow
+	public class InvitationPopupWindow extends PopUpWindow
 	{
 		private var _profile:HGroup;
 		
@@ -42,15 +34,6 @@ package com.soueidan.games.lobby.components.invitations
 		public function InvitationPopupWindow()
 		{
 			super();
-			
-			title = "Invitation Request";
-			
-			var verticalLayout:VerticalLayout = new VerticalLayout();
-			verticalLayout.paddingBottom = verticalLayout.paddingLeft = verticalLayout.paddingRight = verticalLayout.paddingTop = 10;
-			
-			layout = verticalLayout;
-			
-			visible = false;
 			
 			addEventListener(MouseEvent.CLICK, clickedButton);
 		}
@@ -125,18 +108,6 @@ package com.soueidan.games.lobby.components.invitations
 			_invitee = user;
 			_inviteChanged = true;
 			invalidateProperties();
-		}
-		
-		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
-			
-			if ( !visible ) {
-				x = ApplicationManager.getInstance().width/2 - getExplicitOrMeasuredWidth()/2;
-				y = ApplicationManager.getInstance().height/2 - getExplicitOrMeasuredHeight()/2;
-				
-				visible = true;
-			}
-
-			super.updateDisplayList(unscaledWidth, unscaledHeight);
 		}
 	}
 }

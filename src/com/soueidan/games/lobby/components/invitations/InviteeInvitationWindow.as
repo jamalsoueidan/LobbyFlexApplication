@@ -15,6 +15,12 @@ package com.soueidan.games.lobby.components.invitations
 		
 		private var _timer:Timer;
 		
+		public function InviteeInvitationWindow() {
+			super();
+			
+			title = ResourceManager.getString("invite.popup.invitee");
+		}
+		
 		override protected function createChildren():void {
 			super.createChildren();
 			
