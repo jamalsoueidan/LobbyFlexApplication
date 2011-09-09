@@ -8,6 +8,7 @@ package com.soueidan.games.lobby.components
 	import com.soueidan.games.lobby.managers.*;
 	
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Spacer;
@@ -25,6 +26,7 @@ package com.soueidan.games.lobby.components
 		
 		private var _top:HGroup;
 		private var _userProfile:UserProfile;
+		private var _autoPlayButton:Button;
 		
 		private var _bottom:HGroup;
 		
@@ -34,6 +36,7 @@ package com.soueidan.games.lobby.components
 		private var _chatList:ITab;
 		
 		private var _inviteHandler:InviteHandler;
+		private var _autoPlayHandler:AutoPlayHandler;
 		
 		public function Entrance():void {
 			super();
@@ -45,6 +48,7 @@ package com.soueidan.games.lobby.components
 		private function creationDone(event:FlexEvent):void
 		{
 			_inviteHandler = new InviteHandler(_userList);
+			_autoPlayHandler = new AutoPlayHandler(_autoPlayButton);
 		}
 		
 		override protected function createChildren():void {
@@ -53,6 +57,7 @@ package com.soueidan.games.lobby.components
 			if ( !_top ) {
 				_top = new HGroup();
 				_top.percentWidth = 100;
+				_top.verticalAlign = "middle";
 				_top.paddingLeft = FIRST_COLUMN_WIDTH + 8;
 				addElement(_top);
 			}
@@ -62,6 +67,13 @@ package com.soueidan.games.lobby.components
 				_userProfile.percentWidth = FIRST_COLUMN_WIDTH;
 				_userProfile.user = ConnectManager.getInstance().mySelf as SFSUser;
 				_top.addElement(_userProfile);
+			}
+			
+			if (!_autoPlayButton ) {
+				_autoPlayButton = new Button();
+				_autoPlayButton.label = ResourceManager.getString("entrance.auto_play");
+				_autoPlayButton.setStyle("fontSize", 50);
+				_top.addElement(_autoPlayButton);
 			}
 			
 			if ( !_bottom ) {
