@@ -3,27 +3,17 @@ package com.soueidan.games.lobby.components
 	import com.smartfoxserver.v2.core.SFSEvent;
 	import com.smartfoxserver.v2.entities.SFSUser;
 	import com.smartfoxserver.v2.entities.User;
-	import com.smartfoxserver.v2.entities.invitation.Invitation;
-	import com.smartfoxserver.v2.entities.invitation.InvitationReply;
 	import com.smartfoxserver.v2.entities.variables.UserVariable;
-	import com.smartfoxserver.v2.requests.game.InvitationReplyRequest;
-	import com.smartfoxserver.v2.requests.game.InviteUsersRequest;
+	import com.soueidan.games.lobby.components.invitations.InvitationPopupWindow;
+	import com.soueidan.games.lobby.components.users.UserPlayer;
 	import com.soueidan.games.lobby.core.*;
 	import com.soueidan.games.lobby.events.InviteEvent;
 	import com.soueidan.games.lobby.managers.*;
 	
-	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
-	import flash.utils.getQualifiedClassName;
-	
-	import mx.core.IVisualElement;
-	import mx.graphics.codec.PNGEncoder;
-	import mx.managers.PopUpManager;
 	
 	import spark.components.*;
 	import spark.layouts.VerticalLayout;
-	import com.soueidan.games.lobby.components.users.UserPlayer;
-	import com.soueidan.games.lobby.components.invitations.InvitationPopupWindow;
 	
 	public class UserList extends Panel
 	{
