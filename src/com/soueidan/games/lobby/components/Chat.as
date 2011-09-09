@@ -30,6 +30,7 @@ package com.soueidan.games.lobby.components
 		
 		private var _texts:Array = [];
 		
+		private var _say:Label;
 		private var _textInput:TextInput;
 		private var _submit:Button;
 		
@@ -40,41 +41,16 @@ package com.soueidan.games.lobby.components
 		{
 			super();
 			
-			setStyle("paddingTop", 0);
-			setStyle("paddingLeft", 0);
-			setStyle("paddingBottom", 0);
-			setStyle("paddingRight", 0);
-			
 			setStyle("dropShadowVisible", false);
 			
 			title = ResourceManager.getString("entrance.chat");
 			
-			var vertial:VerticalLayout = new VerticalLayout();
-			vertial.gap = 0;			
-			layout = vertial;
+			var vertical:VerticalLayout = new VerticalLayout();
+			vertical.gap = 0;			
+			layout = vertical;
 			
 			_server.addEventListener(SFSEvent.USER_ENTER_ROOM, userEnterRoom);
 			_server.addEventListener(SFSEvent.PUBLIC_MESSAGE, publicMessage);
-		}
-		
-		private function userEnterRoom(event:SFSEvent):void
-		{
-			var user:SFSUser = event.params.user;
-			
-			var name:String = user.name;
-			if ( UserManager.isVip(user)) {
-				name += ":vip:";
-			}
-			
-			var msg:String = name + " " + ResourceManager.getString("chat.msg");
-			if ( ResourceManager.isLocale("ar") ) {
-				msg = ResourceManager.getString("chat.msg") + " " + name;
-			}
-			
-			var color:String = "0x51d63c";
-			_texts.push('<p fontWeight="normal" fontSize="16"><span fontWeight="bold" color="' + color + '">' + ResourceManager.getString("chat.system") + ': </span><span  color="' + color + '">' + ChatManager.convertSmilies(msg, color) + '</span></p>');
-
-			updateTextArea();
 		}
 		
 		override protected function createChildren():void {
@@ -91,9 +67,16 @@ package com.soueidan.games.lobby.components
 			
 			if ( !_form ) {
 				_form = new HGroup();
+				_form.verticalAlign = "middle";
 				_form.percentWidth = 100;
 				_form.paddingLeft = _form.paddingRight = _form.paddingBottom = 5;
 				addElement(_form);
+			}
+			
+			if (!_say ) {
+				_say = new Label();
+				_say.text = ResourceManager.getString("chat.say");
+				_form.addElement(_say);
 			}
 			
 			if ( !_textInput ) {
@@ -101,13 +84,12 @@ package com.soueidan.games.lobby.components
 				if ( ResourceManager.getString("direction") == Direction.RTL ) {
 					_textInput.setStyle("textAlign", "right");
 				}
-				_textInput.percentWidth = 75;
+				_textInput.percentWidth = 100;
 				_form.addElement(_textInput);
 			}
 			
 			if ( !_submit ) {
 				_submit = new Button();
-				_submit.percentWidth = 25;
 				_submit.label = ResourceManager.getString("chat.send");
 				_form.addElement(_submit);
 			}
@@ -115,6 +97,8 @@ package com.soueidan.games.lobby.components
 			(titleDisplay as Label).setStyle("textAlign", ResourceManager.getString("left"));
 			
 			show();
+			writeFromSystem(ResourceManager.getString("chat.welcome"));
+			updateTextArea();
 		}
 		
 		public function show():void {
@@ -126,6 +110,30 @@ package com.soueidan.games.lobby.components
 		public function hide():void {
 			_submit.removeEventListener(MouseEvent.CLICK, submitForm);
 			_textInput.removeEventListener(KeyboardEvent.KEY_DOWN, keyboardDown);
+		}
+		
+		private function userEnterRoom(event:SFSEvent):void
+		{
+			var user:SFSUser = event.params.user;
+			
+			var name:String = user.name;
+			if ( UserManager.isVip(user)) {
+				name += ":vip:";
+			}
+			
+			var msg:String = name + " " + ResourceManager.getString("chat.msg");
+			if ( ResourceManager.isLocale("ar") ) {
+				msg = ResourceManager.getString("chat.msg") + " " + name;
+			}
+			
+			writeFromSystem(msg);
+			
+			updateTextArea();
+		}
+		
+		private function writeFromSystem(msg:String):void {
+			var color:String = "0x51d63c";
+			_texts.push('<p fontWeight="normal" fontSize="16"><span fontWeight="bold" color="' + color + '">' + ResourceManager.getString("chat.system") + ': </span><span  color="' + color + '">' + ChatManager.convertSmilies(msg, color) + '</span></p>');
 		}
 		
 		private function publicMessage(event:SFSEvent):void
