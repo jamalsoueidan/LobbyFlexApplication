@@ -17,6 +17,10 @@ package com.soueidan.games.lobby.core
 		private var _responseHandlers:Object = {};
 		private var _xml:XML;
 		
+		public function Connector(debug:Boolean=false) {
+			super(debug);
+		}
+		
 		public function set parameters(value:Object):void {
 			_parameters = value;
 		}
@@ -51,9 +55,13 @@ package com.soueidan.games.lobby.core
 			
 			var handler:ServerResponseHandler;
 			for each(var theClass:* in handlers) {
-				handler = new theClass();
-				handler.action = action;
-				handler.handleServerResponse(event)
+				if ( theClass is Function ) {
+					theClass(event);
+				} else {
+					handler = new theClass();
+					handler.action = action;
+					handler.handleServerResponse(event)
+				}
 			}
 		}
 		
