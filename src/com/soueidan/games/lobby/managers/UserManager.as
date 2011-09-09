@@ -46,7 +46,7 @@ package com.soueidan.games.lobby.managers
 		
 		public static function isReady(user:User):Boolean
 		{
-			return ( user.getVariable("status").getIntValue() == StatusProfile.readyToPlay );
+			return ( user.getVariable("status").getIntValue() == StatusProfile.isPlay );
 		}
 		
 		public static function isVip(user:SFSUser):Boolean {

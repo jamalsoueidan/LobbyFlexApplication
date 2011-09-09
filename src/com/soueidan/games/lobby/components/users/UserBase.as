@@ -83,8 +83,8 @@ package com.soueidan.games.lobby.components.users
 			
 			if ( !_status ) {
 				_status = new Image();
-				_status.toolTip = ResourceManager.getString("status.ready");
-				_status.source = '/images/status/152.png';
+				_status.toolTip = ResourceManager.getString("status.play");
+				_status.source = '/images/status/play.png';
 				_nicknameGroup.addElement(_status);
 			}
 			
@@ -145,14 +145,15 @@ package com.soueidan.games.lobby.components.users
 			
 			_currentStatus = status;
 			
-			if ( _currentStatus == StatusProfile.readyToPlay ) {
-				_status.toolTip = ResourceManager.getString("status.ready");
-				_status.source = '/images/status/152.png';	
-			}
-			
-			if ( _currentStatus == StatusProfile.doNotDistrub) {
-				_status.toolTip = ResourceManager.getString("status.disturb");
-				_status.source = '/images/status/151.png';
+			if ( _currentStatus == StatusProfile.isAway) {
+				_status.toolTip = ResourceManager.getString("status.away");
+				_status.source = '/images/status/away.png';
+			} else if ( _currentStatus == StatusProfile.isChat) {
+				_status.toolTip = ResourceManager.getString("status.chat");
+				_status.source = '/images/status/chat.png';
+			} else {
+				_status.toolTip = ResourceManager.getString("status.play");
+				_status.source = '/images/status/play.png';
 			}
 		}
 		
