@@ -3,6 +3,8 @@ package com.soueidan.games.lobby.components.users
 	import com.soueidan.games.lobby.managers.ResourceManager;
 	import com.soueidan.games.lobby.managers.UserManager;
 	
+	import flash.events.MouseEvent;
+	
 	import spark.components.Button;
 	import spark.components.VGroup;
 	
@@ -11,12 +13,19 @@ package com.soueidan.games.lobby.components.users
 		private var _invite:Button;
 		private var _stats:Button;
 		
-		protected var _lastGroup:VGroup;
+		private var _lastGroup:VGroup;
+		
+		private var _backgroundChanged:Boolean;
+		private var _backgroundColor:int;
+		private static const BACKGROUND_COLOR:int = 0xFF0040;
 		
 		public function UserPlayer() {
 			super();
 			
 			percentWidth = 100;
+			
+			addEventListener(MouseEvent.ROLL_OVER, rollOver);
+			addEventListener(MouseEvent.ROLL_OUT, rollOut);
 		}
 		
 		override protected function createChildren():void {
@@ -55,12 +64,20 @@ package com.soueidan.games.lobby.components.users
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			
 			graphics.clear();
+			
+			if ( _backgroundChanged ) {
+				_backgroundChanged = false;
+				graphics.beginFill(_backgroundColor);
+				graphics.drawRect(0,0,unscaledWidth, unscaledHeight);
+				graphics.endFill();
+			}
+			
 			graphics.lineStyle(1,0x000);
 			graphics.moveTo(0,unscaledHeight);
 			graphics.lineTo(unscaledWidth,unscaledHeight);
-			
-			super.updateDisplayList(unscaledWidth, unscaledHeight);
 		}
 		
 		override public function update():void {
@@ -73,6 +90,18 @@ package com.soueidan.games.lobby.components.users
 			}
 			
 			invalidateProperties();
+		}
+		
+		private function rollOver(event:MouseEvent):void {
+			_backgroundColor = BACKGROUND_COLOR;
+			_backgroundChanged = true;
+			invalidateDisplayList();
+		}
+		
+		private function rollOut(event:MouseEvent):void {
+			_backgroundColor = 0xFFFFFF;
+			_backgroundChanged = true;
+			invalidateDisplayList();
 		}
 	}
 }

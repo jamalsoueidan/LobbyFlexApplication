@@ -22,6 +22,8 @@ package com.soueidan.games.lobby.components.users
 			super();
 			
 			_server.addEventListener(SFSEvent.USER_VARIABLES_UPDATE, updateStatus);
+			
+			
 		}
 		
 		private function updateStatus(event:SFSEvent):void {
