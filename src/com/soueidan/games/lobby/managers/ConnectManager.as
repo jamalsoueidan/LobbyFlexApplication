@@ -8,7 +8,7 @@ package com.soueidan.games.lobby.managers
 		
 		static public function getInstance():Connector {
 			if ( !_server ) {
-				_server = new Connector();
+				_server = new Connector(true);
 			}
 			
 			return _server;
