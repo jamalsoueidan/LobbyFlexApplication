@@ -14,24 +14,16 @@ package com.soueidan.games.lobby.components.users
 	
 	public class UserBase extends HGroup
 	{
-		/*[Embed(source="assets/status/151.png")] 
-		private var _statusDisturb:Class;*/
-		
-		/*[Embed(source="assets/status/152.png")] 
-		private var _statusReady:Class;*/
-		
 		private var _status:Image;
 		private var _statusChanged:Boolean;
 		private var _currentStatus:int = 0;
 		
 		private var _cache:ContentCache = new ContentCache();
-		private var _image:Image;
+		protected var _image:Image;
 		
 		protected var _nicknameGroup:HGroup;
 		private var _nickname:Label;
 		
-		/*[Embed(source="assets/032.png")] 
-		private var _vipImageClass:Class;*/
 		private var _vipImage:Image;
 		
 		private var _timesPlayed:Label;
