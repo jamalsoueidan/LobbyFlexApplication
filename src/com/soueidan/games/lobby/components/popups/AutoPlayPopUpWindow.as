@@ -93,18 +93,13 @@ package com.soueidan.games.lobby.components.popups
 			
 			var timer:Timer = new Timer(1000, (COUNT-1));
 			timer.addEventListener(TimerEvent.TIMER, timerSequence);
-			timer.addEventListener(TimerEvent.TIMER_COMPLETE, timerComplete);
 			timer.start();
-		}
-		
-		protected function timerComplete(event:TimerEvent):void
-		{
-			trace("go to game");
 		}
 		
 		protected function timerSequence(event:TimerEvent):void
 		{
 			_count.text = String(3 - Timer(event.target).currentCount);
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 	}
 }

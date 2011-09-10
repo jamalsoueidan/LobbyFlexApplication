@@ -1,46 +1,25 @@
 package com.soueidan.games.lobby.components
 {
-	import com.soueidan.games.lobby.managers.ResourceManager;
+	import skins.PanelSkin;
 	
-	import flash.display.Graphics;
+	import spark.components.Panel;
+	import spark.layouts.VerticalLayout;
 	
-	import flashx.textLayout.formats.Direction;
-	
-	import spark.components.VGroup;
-	
-	public class TabContainer extends VGroup
+	public class TabContainer extends Panel
 	{
 		public function TabContainer()
 		{
 			super();
 			
-			percentHeight = 100;
+			setStyle("skinClass", Class(PanelSkin));
+			setStyle("dropShadowVisible", false);
 			
-			paddingTop = 10;
-			paddingLeft = 10;
-			paddingRight = 10;
-			paddingBottom = 10;			
+			height = 200;
+			
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
-			
-			var g:Graphics = graphics;
-			g.lineStyle(0, 0x000);
-			if ( ResourceManager.getString("direction") == Direction.LTR ) {
-				g.lineTo(0,0);
-				g.lineTo(0,unscaledHeight-1);
-				g.lineTo(unscaledWidth-1,unscaledHeight-1);
-				g.lineTo(unscaledWidth-1,-1);
-				g.lineTo(0,-1);
-			} else {
-				g.lineStyle(1,0x000);
-				g.lineTo(1,-1);
-				g.lineTo(1,unscaledHeight-1);
-				g.lineTo(unscaledWidth,unscaledHeight-1);
-				g.lineTo(unscaledWidth,-1);
-				g.lineTo(1,-1);
-			}
-			
+			graphics.clear();
 			
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 		}

@@ -3,21 +3,14 @@ package com.soueidan.games.lobby.core.invite
 	import com.smartfoxserver.v2.core.SFSEvent;
 	import com.smartfoxserver.v2.entities.SFSUser;
 	import com.smartfoxserver.v2.entities.data.*;
-	import com.smartfoxserver.v2.entities.invitation.Invitation;
 	import com.smartfoxserver.v2.entities.invitation.InvitationReply;
-	import com.smartfoxserver.v2.requests.ExtensionRequest;
-	import com.smartfoxserver.v2.requests.IRequest;
-	import com.smartfoxserver.v2.requests.game.InvitationReplyRequest;
 	import com.soueidan.games.lobby.components.*;
 	import com.soueidan.games.lobby.components.users.*;
 	import com.soueidan.games.lobby.core.Connector;
 	import com.soueidan.games.lobby.events.*;
 	import com.soueidan.games.lobby.managers.*;
+	import com.soueidan.games.lobby.requests.CreateGameRequest;
 	import com.soueidan.games.lobby.responses.*;
-	
-	import mx.managers.PopUpManager;
-	
-	import spark.components.Button;
 
 	public class InviteHandler
 	{
@@ -34,7 +27,9 @@ package com.soueidan.games.lobby.core.invite
 			
 			_server.addEventListener(SFSEvent.EXTENSION_RESPONSE, extensionResponse);
 			_server.addEventListener(SFSEvent.INVITATION, receivedInvitation);
-			_server.addEventListener(SFSEvent.INVITATION_REPLY, invitationReplied);	
+			_server.addEventListener(SFSEvent.INVITATION_REPLY, invitationReplied);
+			
+			_server.addResponseHandler(CreateGameResponse.CREATE_GAME, CreateGameResponse);
 		}
 		
 		public function set receivedInvite(value:ReceivedInvite):void
@@ -101,20 +96,15 @@ package com.soueidan.games.lobby.core.invite
 			}
 		}
 		
-		private function invitationReplyAccepted(event:SFSEvent):void
-		{
-			var params:ISFSObject = new SFSObject();
-			
+		private function invitationReplyAccepted(event:SFSEvent):void {
 			// set all players
 			var users:ISFSArray = new SFSArray();
 			users.addInt(event.params.invitee.id);
+			
+			var params:ISFSObject = new SFSObject();
 			params.putSFSArray("users", users);
 			
-			// set game id
-			params.putInt("game_id", _server.gameId);
-			
-			var extensionRequest:IRequest = new ExtensionRequest(CreateRoomResponse.CREATE_ROOM, params);
-			_server.send(extensionRequest);
+			_server.send(new CreateGameRequest(params));
 		}
 		
 		private function extensionResponse(event:SFSEvent):void
@@ -128,8 +118,7 @@ package com.soueidan.games.lobby.core.invite
 			if ( _receivedInvite ) {
 				_receivedInvite.hide();
 				_receivedInvite = null;
-			}
-			
+			}	
 		}
 	}
 }

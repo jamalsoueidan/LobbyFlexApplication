@@ -15,7 +15,7 @@ package com.soueidan.games.lobby.components
 	import spark.components.*;
 	import spark.layouts.VerticalLayout;
 	
-	public class UserList extends Panel
+	public class UserList extends TabContainer
 	{
 		private var _body:Label;
 		
@@ -28,18 +28,7 @@ package com.soueidan.games.lobby.components
 		{
 			super();
 			
-			setStyle("paddingTop", 0);
-			setStyle("paddingLeft", 0);
-			setStyle("paddingBottom", 0);
-			setStyle("paddingRight", 0);
-			
-			setStyle("dropShadowVisible", false);
-			
 			title = ResourceManager.getString("userList.title");
-			
-			var vertial:VerticalLayout = new VerticalLayout();
-			vertial.gap = 0;			
-			layout = vertial;
 			
 			_server.addEventListener(SFSEvent.USER_ENTER_ROOM, userEnterRoom);
 			_server.addEventListener(SFSEvent.USER_EXIT_ROOM, userExitRoom);

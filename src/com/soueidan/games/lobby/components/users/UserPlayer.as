@@ -17,7 +17,7 @@ package com.soueidan.games.lobby.components.users
 		
 		private var _backgroundChanged:Boolean;
 		private var _backgroundColor:int;
-		private static const BACKGROUND_COLOR:int = 0xFF0040;
+		
 		
 		public function UserPlayer() {
 			super();
@@ -63,23 +63,6 @@ package com.soueidan.games.lobby.components.users
 			update();
 		}
 		
-		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
-			super.updateDisplayList(unscaledWidth, unscaledHeight);
-			
-			graphics.clear();
-			
-			if ( _backgroundChanged ) {
-				_backgroundChanged = false;
-				graphics.beginFill(_backgroundColor);
-				graphics.drawRect(0,0,unscaledWidth, unscaledHeight);
-				graphics.endFill();
-			}
-			
-			graphics.lineStyle(1,0x000);
-			graphics.moveTo(0,unscaledHeight);
-			graphics.lineTo(unscaledWidth,unscaledHeight);
-		}
-		
 		override public function update():void {
 			super.update();
 			
@@ -93,15 +76,13 @@ package com.soueidan.games.lobby.components.users
 		}
 		
 		private function rollOver(event:MouseEvent):void {
-			_backgroundColor = BACKGROUND_COLOR;
-			_backgroundChanged = true;
-			invalidateDisplayList();
+			setStyle("backgroundColor", "#efefef");
+			invalidateSkinState();
 		}
 		
 		private function rollOut(event:MouseEvent):void {
-			_backgroundColor = 0xFFFFFF;
-			_backgroundChanged = true;
-			invalidateDisplayList();
+			setStyle("backgroundColor", "#FFFFFF");
+			invalidateSkinState();
 		}
 	}
 }

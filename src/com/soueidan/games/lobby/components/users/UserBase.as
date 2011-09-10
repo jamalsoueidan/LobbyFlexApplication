@@ -6,13 +6,16 @@ package com.soueidan.games.lobby.components.users
 	import com.soueidan.games.lobby.managers.ResourceManager;
 	import com.soueidan.games.lobby.managers.UserManager;
 	
+	import skins.HGroupSkin;
+	
 	import spark.components.HGroup;
 	import spark.components.Image;
 	import spark.components.Label;
+	import spark.components.SkinnableContainer;
 	import spark.components.VGroup;
 	import spark.core.ContentCache;
 	
-	public class UserBase extends HGroup
+	public class UserBase extends SkinnableContainer
 	{
 		private var _status:Image;
 		private var _statusChanged:Boolean;
@@ -36,6 +39,12 @@ package com.soueidan.games.lobby.components.users
 		
 		protected var _sfsUser:SFSUser;
 		protected var _sfsUserChanged:Boolean;
+		
+		public function UserBase() {
+			super();
+			
+			setStyle("skinClass", Class(HGroupSkin));
+		}
 		
 		public function set user(value:SFSUser):void {
 			_sfsUser = value;

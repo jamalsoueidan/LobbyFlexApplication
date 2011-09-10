@@ -8,7 +8,7 @@ package com.soueidan.games.lobby.core
 	import com.soueidan.games.lobby.components.popups.ConnectionLostPopUpWindow;
 	import com.soueidan.games.lobby.events.*;
 	import com.soueidan.games.lobby.managers.*;
-	import com.soueidan.games.lobby.responses.CreateRoomResponse;
+	import com.soueidan.games.lobby.responses.CreateGameResponse;
 	
 	import flash.events.Event;
 	import flash.net.URLLoader;
@@ -69,8 +69,6 @@ package com.soueidan.games.lobby.core
 			_server.parameters = _parameters;
 			_server.addEventListener(SFSEvent.CONNECTION_LOST, lostConnection);
 			_server.addEventListener(SFSEvent.ROOM_JOIN, roomJoined);
-			
-			_server.addResponseHandler(CreateRoomResponse.CREATE_ROOM, CreateRoomResponse);
 			_server.start(_urlLoader.data);
 			
 			//private var _timer:Timer;

@@ -5,11 +5,13 @@ package com.soueidan.games.lobby.responses
 	
 	import flash.external.ExternalInterface;
 
-	public class CreateRoomResponse extends ServerResponseHandler
+	public class CreateGameResponse extends ServerResponseHandler
 	{
-		public static const CREATE_ROOM:String = "create_room";
+		public static const CREATE_GAME:String = "create_game";
 		
 		override public function handleServerResponse(event:SFSEvent):void {
+			trace("create game");
+			
 			var object:SFSObject = event.params.params as SFSObject;
 			
 			ExternalInterface.call("start_match", object.getUtfString("room"));

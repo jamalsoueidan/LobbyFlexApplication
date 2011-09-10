@@ -16,17 +16,21 @@ package com.soueidan.games.lobby.components
 	
 	import mx.utils.StringUtil;
 	
+	import skins.HGroupSkin;
+	import skins.VGroupSkin;
+	
 	import spark.components.*;
 	import spark.layouts.VerticalLayout;
 	import spark.utils.TextFlowUtil;
 	
-	public class Chat extends Panel implements ITab
+	public class Chat extends TabContainer implements ITab
 	{
 		private static const MAX_LINES:int = 30;
 		
+		private var _box:SkinnableContainer;
 		private var _textArea:TextArea;
 		
-		private var _form:HGroup;
+		private var _form:SkinnableContainer;
 		
 		private var _texts:Array = [];
 		
@@ -41,13 +45,7 @@ package com.soueidan.games.lobby.components
 		{
 			super();
 			
-			setStyle("dropShadowVisible", false);
-			
 			title = ResourceManager.getString("entrance.chat");
-			
-			var vertical:VerticalLayout = new VerticalLayout();
-			vertical.gap = 0;			
-			layout = vertical;
 			
 			_server.addEventListener(SFSEvent.USER_ENTER_ROOM, userEnterRoom);
 			_server.addEventListener(SFSEvent.PUBLIC_MESSAGE, publicMessage);
@@ -56,20 +54,26 @@ package com.soueidan.games.lobby.components
 		override protected function createChildren():void {
 			super.createChildren();
 			
+			if (!_box ) {
+				_box = new SkinnableContainer();
+				_box.setStyle("skinClass", Class(VGroupSkin));
+				_box.percentWidth = _box.percentHeight = 100;
+				addElement(_box);
+			}
+			
 			if ( !_textArea ) {
 				_textArea = new TextArea();
 				_textArea.setStyle("borderVisible", false);
 				_textArea.editable = _textArea.selectable = false;
 				_textArea.percentWidth = 100;
 				_textArea.percentHeight = 100;
-				addElement(_textArea);
+				_box.addElement(_textArea);
 			}
 			
 			if ( !_form ) {
-				_form = new HGroup();
-				_form.verticalAlign = "middle";
+				_form = new SkinnableContainer();
+				_form.setStyle("skinClass", Class(HGroupSkin));
 				_form.percentWidth = 100;
-				_form.paddingLeft = _form.paddingRight = _form.paddingBottom = 5;
 				addElement(_form);
 			}
 			
@@ -198,6 +202,13 @@ package com.soueidan.games.lobby.components
 			if ( event.keyCode == Keyboard.ENTER ) {
 				submitForm();
 			}
+		}
+		
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+			//trace(getExplicitOrMeasuredWidth(), unscaledWidth, _box.getExplicitOrMeasuredWidth());
+			
+			
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
 		}
 	}
 }

@@ -11,7 +11,10 @@ package com.soueidan.games.lobby.core
 	import com.soueidan.games.lobby.managers.ConnectManager;
 	import com.soueidan.games.lobby.requests.FindPlayerRequest;
 	
+	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.external.ExternalInterface;
+	import flash.utils.setInterval;
 	
 	import mx.events.CloseEvent;
 	import mx.events.DragEvent;
@@ -56,8 +59,9 @@ package com.soueidan.games.lobby.core
 			var params:ISFSObject = event.params.params as SFSObject
 			var room:String = params.getUtfString("room");
 			_autoPlayWindow.playerFound();
-			trace(room);
-			
+			_autoPlayWindow.addEventListener(Event.COMPLETE, function():void {
+				ExternalInterface.call("start_match", room);		
+			});
 		}
 	}
 }
