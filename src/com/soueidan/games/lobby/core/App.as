@@ -35,6 +35,7 @@ package com.soueidan.games.lobby.core
 			super();
 			
 			ApplicationManager.setInstance(this);
+			
 		}
 		
 		override protected function createChildren():void {
@@ -43,10 +44,16 @@ package com.soueidan.games.lobby.core
 			_parameters = systemManager.loaderInfo.parameters	
 				
 			if ( _parameters.language == "ar" ) {
-				resourceManager.localeChain = ['ar', 'en'];
+				resourceManager.localeChain = ['ar'];
 			} else {
-				resourceManager.localeChain = ['en', 'ar'];
+				resourceManager.localeChain = ['en_US'];
 			}
+			
+			var path:String = "";
+			if ( _parameters.debug != true) {
+				path = "/";
+			}
+			styleManager.loadStyleDeclarations(path + "assets/styles/" + ResourceManager.locale + ".swf", true, true);
 			
 			layoutDirection = resourceManager.getString('resources','direction');
 				
@@ -84,6 +91,7 @@ package com.soueidan.games.lobby.core
 		
 		private function roomJoined(evt:SFSEvent):void
 		{	
+			
 			addElement(_entrance);
 			_server.removeEventListener(SFSEvent.ROOM_JOIN, roomJoined);
 		}		

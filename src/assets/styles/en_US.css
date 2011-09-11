@@ -1,0 +1,40 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+@font-face {
+	src:url("../fonts/TF2secondary.ttf");
+	fontFamily: fontBold;
+	embedAsCFF: true;
+	fontWeight: bold;
+}
+
+@font-face {
+	src:url("../fonts/TF2secondary.ttf");
+	fontFamily: font;
+	embedAsCFF: true;
+}
+
+s|VGroup {
+	fontFamily:font;
+	fontSize:14px;
+}
+
+s|Panel {
+	fontFamily:font;
+	fontSize:14px;
+}
+
+s|Panel s|Label {
+	fontFamily:fontBold;
+}
+
+s|TitleWindow {
+	fontFamily:font;
+	fontSize:14px;
+}
+
+s|TitleWindow  s|Label#titleDisplay {
+	fontFamily:fontBold;
+	fontSize:24px;
+}

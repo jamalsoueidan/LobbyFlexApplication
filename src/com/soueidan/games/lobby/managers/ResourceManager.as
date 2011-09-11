@@ -12,5 +12,9 @@ package com.soueidan.games.lobby.managers
 		public static function isLocale(value:String):Boolean {
 			return (mx.resources.ResourceManager.getInstance().localeChain[0] == value);
 		}
+		
+		public static function get locale():String {
+			return mx.resources.ResourceManager.getInstance().localeChain[0];
+		}
 	}
 }
