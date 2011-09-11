@@ -2,3 +2,6 @@ bin-debug/
 bin-release/
 debug/
 .DS_STORE
+src/assets/styles/en_US.swf
+
+src/assets/styles/ar.swf
