@@ -4,11 +4,11 @@ lobby like this design http://tf2lobby.com/
 
 handle no connection to server
 
-embed font
-
 add reconnect button to connection lost
 
 add moderator functions
 
 ./mxmlc /Users/jamalsoueidan/Documents/Adobe\ Flash\ Builder\ 4.5/LobbyFlexApplication/src/assets/styles/ar.css
 ./mxmlc /Users/jamalsoueidan/Documents/Adobe\ Flash\ Builder\ 4.5/LobbyFlexApplication/src/assets/styles/en_US.css
+
+remove all styles from code and move to css files like the colours of the rectangle and panel

@@ -58,13 +58,11 @@ package com.soueidan.games.lobby.components
 				_top = new HGroup();
 				_top.percentWidth = 100;
 				_top.verticalAlign = "middle";
-				_top.paddingLeft = FIRST_COLUMN_WIDTH + 8;
 				addElement(_top);
 			}
 			
 			if ( !_userProfile ) {
 				_userProfile = new UserProfile();
-				_userProfile.percentWidth = FIRST_COLUMN_WIDTH;
 				_userProfile.user = ConnectManager.getInstance().mySelf as SFSUser;
 				_top.addElement(_userProfile);
 			}
@@ -84,14 +82,15 @@ package com.soueidan.games.lobby.components
 			
 			if ( !_chatList ) {
 				_chatList = new Chat();
-				_chatList.width = FIRST_COLUMN_WIDTH;
+				_chatList.percentWidth = 30;
 				_chatList.percentHeight = 100;
 				_bottom.addElement(_chatList);
 			}
 			
 			if ( !_userList ) {
 				_userList = new UserList();
-				_userList.percentWidth = _userList.percentHeight = 100;
+				_userList.percentWidth = 70;
+				_userList.percentHeight = 100;
 				_bottom.addElement(_userList);
 			}	
 		}

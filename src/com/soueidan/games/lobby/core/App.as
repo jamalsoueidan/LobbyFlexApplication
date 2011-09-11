@@ -35,7 +35,6 @@ package com.soueidan.games.lobby.core
 			super();
 			
 			ApplicationManager.setInstance(this);
-			
 		}
 		
 		override protected function createChildren():void {
@@ -50,7 +49,7 @@ package com.soueidan.games.lobby.core
 			}
 			
 			var path:String = "";
-			if ( _parameters.debug != true) {
+			if ( _parameters.debug != "true") {
 				path = "/";
 			}
 			styleManager.loadStyleDeclarations(path + "assets/styles/" + ResourceManager.locale + ".swf", true, true);
