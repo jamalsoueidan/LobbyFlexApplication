@@ -6,6 +6,8 @@ package com.soueidan.games.lobby.components.popups
 	
 	import mx.managers.PopUpManager;
 	
+	import skins.TitleWindowSkin;
+	
 	import spark.components.Label;
 	import spark.components.TitleWindow;
 	import spark.layouts.VerticalLayout;
@@ -22,7 +24,9 @@ package com.soueidan.games.lobby.components.popups
 			verticalLayout.paddingBottom = verticalLayout.paddingLeft = verticalLayout.paddingRight = verticalLayout.paddingTop = 10;
 			verticalLayout.horizontalAlign = "center";
 			
-			layout = verticalLayout;			
+			layout = verticalLayout;
+			
+			setStyle("skinClass", Class(TitleWindowSkin));
 		}
 		
 		override protected function createChildren():void {

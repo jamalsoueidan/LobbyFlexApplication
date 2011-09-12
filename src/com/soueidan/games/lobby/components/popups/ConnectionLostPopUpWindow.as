@@ -26,7 +26,7 @@ package com.soueidan.games.lobby.components.popups
 			
 			title = ResourceManager.getString("connection_lost.title");
 			
-			width = 300;
+			width = 400;
 		}
 		
 		override protected function createChildren():void {
