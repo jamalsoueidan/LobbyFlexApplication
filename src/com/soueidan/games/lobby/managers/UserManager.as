@@ -52,5 +52,10 @@ package com.soueidan.games.lobby.managers
 		public static function isVip(user:SFSUser):Boolean {
 			return user.getVariable("vip").getBoolValue();
 		}
+		
+		public static function isAtLeastModerator(user:User):Boolean
+		{
+			return ( user.isModerator() || user.isAdmin() );
+		}
 	}
 }
