@@ -8,6 +8,7 @@ package com.soueidan.games.lobby.core
 	import com.soueidan.games.lobby.components.popups.BanPopUpWindow;
 	import com.soueidan.games.lobby.components.popups.ConnectionLostPopUpWindow;
 	import com.soueidan.games.lobby.components.popups.KickPopUpWindow;
+	import com.soueidan.games.lobby.components.popups.NoConnectionPopUpWindow;
 	import com.soueidan.games.lobby.components.popups.PopUpWindow;
 	import com.soueidan.games.lobby.events.*;
 	import com.soueidan.games.lobby.managers.*;
@@ -79,12 +80,17 @@ package com.soueidan.games.lobby.core
 			_server.parameters = _parameters;
 			_server.addEventListener(SFSEvent.LOGIN_ERROR, loginError);
 			_server.addEventListener(SFSEvent.CONNECTION_LOST, lostConnection);
+			_server.addEventListener(SFSEvent.CONNECTION, connection);
 			_server.addEventListener(SFSEvent.ROOM_JOIN, roomJoined);
 			_server.start(_urlLoader.data);
-			
-			//private var _timer:Timer;
-			/*_timer = new Timer(1000,1000);
-			_timer.start();*/
+		}
+		
+		protected function connection(event:SFSEvent):void
+		{
+			if ( !event.params.success ) {
+				var popup:PopUpWindow = new NoConnectionPopUpWindow();
+				popup.show();
+			}
 			
 		}
 		
@@ -97,6 +103,11 @@ package com.soueidan.games.lobby.core
 				popup.show();
 			}
 			
+			shutDown();
+		}
+		
+		private function shutDown():void
+		{
 			_server.removeEventListener(SFSEvent.CONNECTION_LOST, lostConnection);
 			_server.disconnect();
 		}
@@ -113,6 +124,7 @@ package com.soueidan.games.lobby.core
 			}
 			
 			popup.show();
+			shutDown();
 		}
 		
 		private function roomJoined(evt:SFSEvent):void
