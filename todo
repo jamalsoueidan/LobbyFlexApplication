@@ -8,6 +8,8 @@ add reconnect button to connection lost
 
 add moderator functions
 
+update autoplay to show which user he are going to play against, and make cancel option if he don't want?
+
 ./mxmlc /Users/jamalsoueidan/Documents/Adobe\ Flash\ Builder\ 4.5/LobbyFlexApplication/src/assets/styles/ar.css
 ./mxmlc /Users/jamalsoueidan/Documents/Adobe\ Flash\ Builder\ 4.5/LobbyFlexApplication/src/assets/styles/en_US.css
 

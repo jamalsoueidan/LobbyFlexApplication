@@ -52,6 +52,7 @@ package com.soueidan.games.lobby.core
 			if ( _parameters.debug != "true") {
 				path = "/";
 			}
+			
 			styleManager.loadStyleDeclarations(path + "assets/styles/" + ResourceManager.locale + ".swf", true, true);
 			
 			layoutDirection = resourceManager.getString('resources','direction');
@@ -90,7 +91,6 @@ package com.soueidan.games.lobby.core
 		
 		private function roomJoined(evt:SFSEvent):void
 		{	
-			
 			addElement(_entrance);
 			_server.removeEventListener(SFSEvent.ROOM_JOIN, roomJoined);
 		}		

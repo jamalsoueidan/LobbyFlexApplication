@@ -31,7 +31,7 @@ package com.soueidan.games.lobby.components.popups
 			
 			title = ResourceManager.getString("auto_play.searching");
 			
-			width = 300;
+			width = 400;
 		}
 		
 		override protected function createChildren():void {
@@ -59,7 +59,7 @@ package com.soueidan.games.lobby.components.popups
 				_cancel = new Button();
 				_cancel.label = ResourceManager.getString("cancel");;
 				_cancel.addEventListener(MouseEvent.CLICK, cancelFindPlayer);
-				addElement(_cancel);
+				controlBarGroup.addElement(_cancel);
 			}
 		}
 		

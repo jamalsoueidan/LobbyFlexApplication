@@ -63,6 +63,7 @@ package com.soueidan.games.lobby.components
 			
 			if ( !_userProfile ) {
 				_userProfile = new UserProfile();
+				_userProfile.percentWidth = 30;
 				_userProfile.user = ConnectManager.getInstance().mySelf as SFSUser;
 				_top.addElement(_userProfile);
 			}

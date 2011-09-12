@@ -40,7 +40,7 @@
 	</s:Rect>
 	
 	
-	<s:Group id="contentGroup" width="100%" >
+	<s:Group id="contentGroup" width="100%">
 		<s:layout>
 			<s:HorizontalLayout paddingLeft="6" paddingTop="6" paddingRight="12" paddingBottom="12" verticalAlign="middle" horizontalAlign="center" />
 		</s:layout>
