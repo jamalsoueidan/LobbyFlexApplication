@@ -36,7 +36,7 @@ package com.soueidan.games.lobby.components
 			
 			_server.addEventListener(SFSEvent.USER_VARIABLES_UPDATE, userUpdateVariable);
 			
-			addEventListener(MouseEvent.CLICK, clickedUser);
+			//addEventListener(MouseEvent.CLICK, clickedUser);
 		}
 		
 		private function userUpdateVariable(event:SFSEvent):void
@@ -124,7 +124,7 @@ package com.soueidan.games.lobby.components
 			showNoUsers(evt);
 		}
 		
-		private function clickedUser(evt:MouseEvent):void {
+		/*private function clickedUser(evt:MouseEvent):void {
 			var isUserOppount:Boolean = evt.target is Button;
 			if ( !isUserOppount ) {
 				return;
@@ -135,7 +135,7 @@ package com.soueidan.games.lobby.components
 				var userOppount:UserPlayer = (evt.target).parent.parent as UserPlayer;
 				dispatchEvent(new InviteEvent(InviteEvent.SENT, false, false, userOppount));
 			}
-		}
+		}*/
 		
 		private function removeEmptyLabel():void {
 			if ( contains(_body) ) {
