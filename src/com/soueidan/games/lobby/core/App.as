@@ -5,7 +5,10 @@ package com.soueidan.games.lobby.core
 	import com.smartfoxserver.v2.entities.invitation.InvitationReply;
 	import com.smartfoxserver.v2.requests.ExtensionRequest;
 	import com.soueidan.games.lobby.components.*;
+	import com.soueidan.games.lobby.components.popups.BanPopUpWindow;
 	import com.soueidan.games.lobby.components.popups.ConnectionLostPopUpWindow;
+	import com.soueidan.games.lobby.components.popups.KickPopUpWindow;
+	import com.soueidan.games.lobby.components.popups.PopUpWindow;
 	import com.soueidan.games.lobby.events.*;
 	import com.soueidan.games.lobby.managers.*;
 	import com.soueidan.games.lobby.responses.CreateGameResponse;
@@ -74,6 +77,7 @@ package com.soueidan.games.lobby.core
 			trace("setup configuration");
 			_server = ConnectManager.getInstance();
 			_server.parameters = _parameters;
+			_server.addEventListener(SFSEvent.LOGIN_ERROR, loginError);
 			_server.addEventListener(SFSEvent.CONNECTION_LOST, lostConnection);
 			_server.addEventListener(SFSEvent.ROOM_JOIN, roomJoined);
 			_server.start(_urlLoader.data);
@@ -84,8 +88,30 @@ package com.soueidan.games.lobby.core
 			
 		}
 		
+		protected function loginError(event:SFSEvent):void
+		{
+			var params:Object = event.params;
+			var popup:PopUpWindow;
+			if ( params.errorCode == 4 ) {
+				popup = new BanPopUpWindow();
+				popup.show();
+			}
+			
+			_server.removeEventListener(SFSEvent.CONNECTION_LOST, lostConnection);
+			_server.disconnect();
+		}
+		
 		private function lostConnection(event:SFSEvent=null):void {
-			var popup:ConnectionLostPopUpWindow = new ConnectionLostPopUpWindow();
+			var params:Object = event.params;
+			var popup:PopUpWindow;
+			if ( params.reason == "kick") {
+				popup = new KickPopUpWindow();
+			} else if ( params.reason == "ban" ) {
+				popup = new BanPopUpWindow();
+			} else {
+				popup = new ConnectionLostPopUpWindow();
+			}
+			
 			popup.show();
 		}
 		

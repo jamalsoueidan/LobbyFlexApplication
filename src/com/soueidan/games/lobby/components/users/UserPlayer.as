@@ -1,5 +1,7 @@
 package com.soueidan.games.lobby.components.users
 {
+	import com.smartfoxserver.v2.requests.BanMode;
+	import com.smartfoxserver.v2.requests.BanUserRequest;
 	import com.smartfoxserver.v2.requests.IRequest;
 	import com.smartfoxserver.v2.requests.KickUserRequest;
 	import com.soueidan.games.lobby.core.Connector;
@@ -65,7 +67,7 @@ package com.soueidan.games.lobby.components.users
 					_kick = new Button();
 					_kick.setStyle("skinClass", Class(ButtonImageSkin));
 					_kick.styleName = "kick";
-					_kick.toolTip = "Ban";
+					_kick.toolTip = "Kick";
 					_actions.addElement(_kick);
 				}
 			}
@@ -134,12 +136,12 @@ package com.soueidan.games.lobby.components.users
 			var btn:Button = event.target as Button;
 			var request:IRequest;
 			if ( _kick && btn.styleName == _kick.styleName ) {
-				request = new KickUserRequest(_sfsUser.id, "you are kicked");
+				request = new KickUserRequest(_sfsUser.id, "Kicked", 2);
 				_server.send(request);
 			} 
 
 			if ( _ban && btn.styleName == _ban.styleName ) {
-				request = new KickUserRequest(_sfsUser.id, "you are kicked");
+				request = new BanUserRequest(_sfsUser.id, "Banned", BanMode.BY_NAME, 2);
 				_server.send(request);
 			} 
 
