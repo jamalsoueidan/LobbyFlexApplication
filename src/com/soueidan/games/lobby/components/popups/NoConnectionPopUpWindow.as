@@ -25,7 +25,7 @@ package com.soueidan.games.lobby.components.popups
 			if (!_text ) {
 				_text = new Text();
 				_text.percentWidth = 100;
-				_text.text = ResourceManager.getString("no_connection.text");
+				_text.text = ResourceManager.getString("no_connection.description");
 				addElement(_text);
 			}
 		}
