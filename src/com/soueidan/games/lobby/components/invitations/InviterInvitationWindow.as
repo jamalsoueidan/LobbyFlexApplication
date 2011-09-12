@@ -30,7 +30,7 @@ package com.soueidan.games.lobby.components.invitations
 				_cancel.label = ResourceManager.getString("invite.cancel") + " (10)";
 			}
 			
-			_buttons.addElement(_cancel);
+			controlBarGroup.addElement(_cancel);
 			
 			_timer = new Timer(1000, TIMER_COUNT);
 			_timer.addEventListener(TimerEvent.TIMER, timerDelay, false, 0, true);

@@ -30,8 +30,8 @@ package com.soueidan.games.lobby.components.invitations
 				_accept.label = ResourceManager.getString("invite.accept");
 			}
 			
-			if ( !contains(_accept) ) {
-				_buttons.addElement(_accept);
+			if ( !controlBarGroup.contains(_accept) ) {
+				controlBarGroup.addElement(_accept);
 			}
 			
 			if ( !_refuse ) {
@@ -40,8 +40,8 @@ package com.soueidan.games.lobby.components.invitations
 				_refuse.label = ResourceManager.getString("invite.refuse") + " (10)";
 			}
 			
-			if ( !contains(_refuse) ) {
-				_buttons.addElement(_refuse);
+			if ( !controlBarGroup.contains(_refuse) ) {
+				controlBarGroup.addElement(_refuse);
 			}
 			
 			_timer = new Timer(1000, TIMER_COUNT);

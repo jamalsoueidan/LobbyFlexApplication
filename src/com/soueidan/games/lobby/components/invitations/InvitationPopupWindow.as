@@ -25,8 +25,6 @@ package com.soueidan.games.lobby.components.invitations
 		
 		private var _inviteChanged:Boolean;
 		
-		protected var _buttons:HGroup;
-		
 		private var _timer:Timer;
 		
 		static protected const ACCEPT:String = "accept";
@@ -79,13 +77,6 @@ package com.soueidan.games.lobby.components.invitations
 			if ( !_inviteeProfile ){
 				_inviteeProfile = new UserVersus();
 				_profile.addElement(_inviteeProfile);
-			}
-			
-			if ( !_buttons ) {
-				_buttons = new HGroup();
-				_buttons.percentWidth = 100;
-				_buttons.horizontalAlign = "center";
-				addElement(_buttons);
 			}
 		}
 	
