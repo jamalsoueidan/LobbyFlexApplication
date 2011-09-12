@@ -40,6 +40,7 @@ package com.soueidan.games.lobby.components.users
 			
 			if ( !_list ) {
 				_list = new DropDownList();
+				_list.percentWidth = 100;
 				_list.dataProvider = StatusProfile.getList();
 				_list.addEventListener(DropDownEvent.CLOSE, choosenFromList);
 				_list.requireSelection = true;

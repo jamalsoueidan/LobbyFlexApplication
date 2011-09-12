@@ -19,11 +19,7 @@ package com.soueidan.games.lobby.components
 	import spark.layouts.VerticalLayout;
 
 	public class Entrance extends VGroup
-	{
-		
-		private static const FIRST_COLUMN_WIDTH:int = 300;
-		private static const SECOND_COLUMN_WIDTH:int = 100;
-		
+	{	
 		private var _top:HGroup;
 		private var _userProfile:UserProfile;
 		private var _autoPlayButton:Button;

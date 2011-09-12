@@ -80,7 +80,7 @@ package com.soueidan.games.lobby.components.users
 			
 			if ( !_nickname ) {
 				_nickname = new Label();
-				_nickname.setStyle("fontWeight","bold");
+				_nickname.styleName = "nickname";
 				_nicknameGroup.addElement(_nickname);
 			}
 			
