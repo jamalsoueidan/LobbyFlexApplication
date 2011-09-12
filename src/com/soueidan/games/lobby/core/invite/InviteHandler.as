@@ -39,7 +39,9 @@ package com.soueidan.games.lobby.core.invite
 
 		private function sendInvitation(event:InviteEvent):void {
 			trace("sent invitation");
-
+			event.stopImmediatePropagation();
+			event.stopPropagation();
+			
 			var sendInvite:SentInvite;
 			var found:Boolean;
 			for each( sendInvite in _sentInvitations ){
@@ -79,6 +81,8 @@ package com.soueidan.games.lobby.core.invite
 			
 			_receivedInvite = new ReceivedInvite(evt.params.invitation, this);
 			_receivedInvite.show();
+			
+			SoundManager.playRecievedInvitation();
 		}
 		
 		protected function invitationReplied(event:SFSEvent):void
