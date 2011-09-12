@@ -16,5 +16,12 @@ package com.soueidan.games.lobby.components
 			setStyle("borderVisible", false);
 			setStyle("textAlign", ResourceManager.getString("left"));
 		}
+		
+		override protected function createChildren():void {
+			
+			super.createChildren();
+			
+			textDisplay.multiline = true;
+		}
 	}
 }
