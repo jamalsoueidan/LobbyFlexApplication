@@ -19,30 +19,21 @@
 .kick {icon:Embed(source="../privileges/kick.png");}
 .ban {icon:Embed(source="../privileges/ban.png");}
 
-.receivedInvitation {
-	url: Embed(source='../sounds/received_invitation.mp3');
-}
+.receivedInvitation {url: Embed(source='../sounds/received_invitation.mp3');}
 
-s|VGroup {
-	fontFamily:font;
-	fontSize:14px;
-}
-
-s|Panel {
-	fontFamily:font;
-	fontSize:14px;
-}
-
-s|Panel s|Label {
+s|Panel s|Label#titleDisplay {
 	fontFamily:fontBold;
 }
 
-s|TitleWindow {
-	fontFamily:font;
-	fontSize:14px;
+.nickname {
+	fontFamily:fontBold;
+	fontWeight:bold;
 }
 
-s|TitleWindow  s|Label#titleDisplay {
+#titleDisplay {
 	fontFamily:fontBold;
-	fontSize:24px;
+}
+
+s|Application {
+	fontFamily:font;
 }
