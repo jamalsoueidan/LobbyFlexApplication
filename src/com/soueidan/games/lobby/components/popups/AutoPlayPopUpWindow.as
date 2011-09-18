@@ -104,7 +104,6 @@ package com.soueidan.games.lobby.components.popups
 		
 		protected function timerSequence(event:TimerEvent):void
 		{
-			trace(Timer(event.target).currentCount);
 			_count.text = String(COUNT - Timer(event.target).currentCount);
 		}
 		
