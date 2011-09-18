@@ -16,7 +16,7 @@ package com.soueidan.games.lobby.components.popups
 
 	public class AutoPlayPopUpWindow extends PopUpWindow
 	{
-		private static const COUNT:int = 3;
+		private static const COUNT:int = 5;
 		
 		private var _text:Text;
 		
@@ -74,7 +74,7 @@ package com.soueidan.games.lobby.components.popups
 		public function playerFound():void
 		{
 			removeElement(_progress);
-			removeElement(_cancel);
+			controlBarGroup.removeElement(_cancel);
 			
 			closeButton.visible = false;
 			
@@ -91,15 +91,22 @@ package com.soueidan.games.lobby.components.popups
 			_count.text = String(COUNT);
 			addElement(_count);
 			
-			var timer:Timer = new Timer(1000, (COUNT-1));
+			var timer:Timer = new Timer(1000, COUNT);
 			timer.addEventListener(TimerEvent.TIMER, timerSequence);
+			timer.addEventListener(TimerEvent.TIMER_COMPLETE, timerComplete);
 			timer.start();
+		}
+		
+		protected function timerComplete(event:TimerEvent):void
+		{
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		protected function timerSequence(event:TimerEvent):void
 		{
-			_count.text = String(3 - Timer(event.target).currentCount);
-			dispatchEvent(new Event(Event.COMPLETE));
+			trace(Timer(event.target).currentCount);
+			_count.text = String(COUNT - Timer(event.target).currentCount);
 		}
+		
 	}
 }
