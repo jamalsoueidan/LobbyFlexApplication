@@ -1,7 +1,8 @@
 package com.soueidan.games.lobby.components.popups
 {
-	import com.soueidan.games.lobby.components.Text;
-	import com.soueidan.games.lobby.managers.ResourceManager;
+	import com.soueidan.games.engine.components.Text;
+	import com.soueidan.games.engine.components.popups.PopUpWindow;
+	import com.soueidan.games.engine.managers.ResourceManager;
 	
 	public class BanPopUpWindow extends PopUpWindow
 	{

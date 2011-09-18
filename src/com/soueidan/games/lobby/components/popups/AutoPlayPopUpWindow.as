@@ -1,7 +1,8 @@
 package com.soueidan.games.lobby.components.popups
 {
-	import com.soueidan.games.lobby.components.Text;
-	import com.soueidan.games.lobby.managers.ResourceManager;
+	import com.soueidan.games.engine.components.Text;
+	import com.soueidan.games.engine.components.popups.PopUpWindow;
+	import com.soueidan.games.engine.managers.ResourceManager;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -9,8 +10,6 @@ package com.soueidan.games.lobby.components.popups
 	import flash.utils.Timer;
 	
 	import mx.controls.ProgressBar;
-	import mx.managers.PopUpManager;
-	import mx.skins.spark.ProgressBarSkin;
 	
 	import spark.components.Button;
 

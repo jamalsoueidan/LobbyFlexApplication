@@ -1,7 +1,7 @@
 package com.soueidan.games.lobby.components.invitations
 {
+	import com.soueidan.games.engine.managers.ResourceManager;
 	import com.soueidan.games.lobby.events.InviteEvent;
-	import com.soueidan.games.lobby.managers.ResourceManager;
 	
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;

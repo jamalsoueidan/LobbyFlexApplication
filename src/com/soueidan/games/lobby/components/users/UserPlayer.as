@@ -1,14 +1,11 @@
 package com.soueidan.games.lobby.components.users
 {
-	import com.smartfoxserver.v2.requests.BanMode;
-	import com.smartfoxserver.v2.requests.BanUserRequest;
-	import com.smartfoxserver.v2.requests.IRequest;
-	import com.smartfoxserver.v2.requests.KickUserRequest;
-	import com.soueidan.games.lobby.core.Connector;
+	import com.smartfoxserver.v2.requests.*;
+	import com.soueidan.games.engine.components.user.UserBase;
+	import com.soueidan.games.engine.managers.ServerManager;
+	import com.soueidan.games.engine.managers.UserManager;
+	import com.soueidan.games.engine.net.Server;
 	import com.soueidan.games.lobby.events.InviteEvent;
-	import com.soueidan.games.lobby.managers.ConnectManager;
-	import com.soueidan.games.lobby.managers.ResourceManager;
-	import com.soueidan.games.lobby.managers.UserManager;
 	
 	import flash.events.MouseEvent;
 	
@@ -16,8 +13,6 @@ package com.soueidan.games.lobby.components.users
 	
 	import spark.components.Button;
 	import spark.components.HGroup;
-	import spark.components.Image;
-	import spark.components.VGroup;
 	
 	public class UserPlayer extends UserBase
 	{	
@@ -30,7 +25,7 @@ package com.soueidan.games.lobby.components.users
 		
 		private var _backgroundChanged:Boolean;
 		private var _backgroundColor:int;
-		private var _server:Connector;
+		private var _server:Server;
 		
 		public function UserPlayer() {
 			super();
@@ -40,7 +35,7 @@ package com.soueidan.games.lobby.components.users
 			addEventListener(MouseEvent.ROLL_OVER, rollOver);
 			addEventListener(MouseEvent.ROLL_OUT, rollOut);
 			
-			_server = ConnectManager.getInstance();
+			_server = ServerManager.getInstance();
 		}
 		
 		override protected function createChildren():void {

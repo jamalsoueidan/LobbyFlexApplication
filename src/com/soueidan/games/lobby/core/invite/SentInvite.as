@@ -4,19 +4,8 @@ package com.soueidan.games.lobby.core.invite
 	import com.smartfoxserver.v2.entities.data.ISFSObject;
 	import com.smartfoxserver.v2.entities.data.SFSObject;
 	import com.smartfoxserver.v2.requests.ExtensionRequest;
-	import com.smartfoxserver.v2.requests.IRequest;
 	import com.smartfoxserver.v2.requests.game.InviteUsersRequest;
-	import com.soueidan.games.lobby.components.invitations.InvitationPopupWindow;
 	import com.soueidan.games.lobby.events.InviteEvent;
-	import com.soueidan.games.lobby.managers.ApplicationManager;
-	import com.soueidan.games.lobby.managers.ConnectManager;
-	
-	import flash.display.DisplayObject;
-	import flash.events.Event;
-	import flash.utils.getTimer;
-	
-	import mx.core.FlexGlobals;
-	import mx.managers.PopUpManager;
 
 	public class SentInvite extends InviteBase
 	{		

@@ -1,20 +1,12 @@
 package com.soueidan.games.lobby.core.invite
 {
-	import com.hurlant.crypto.symmetric.NullPad;
 	import com.smartfoxserver.v2.entities.SFSUser;
 	import com.smartfoxserver.v2.entities.invitation.Invitation;
 	import com.smartfoxserver.v2.entities.invitation.InvitationReply;
 	import com.smartfoxserver.v2.requests.game.InvitationReplyRequest;
 	import com.soueidan.games.lobby.events.InviteEvent;
-	import com.soueidan.games.lobby.managers.ApplicationManager;
 	
-	import flash.display.DisplayObject;
-	import flash.events.Event;
-	
-	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
-	
-	import spark.components.Application;
 
 	public class ReceivedInvite extends InviteBase
 	{

@@ -1,14 +1,12 @@
 package com.soueidan.games.lobby.responses
 {
-	import com.smartfoxserver.v2.SmartFox;
 	import com.smartfoxserver.v2.core.SFSEvent;
-	
-	import com.soueidan.games.lobby.core.Connector;
-	import com.soueidan.games.lobby.managers.ConnectManager;
+	import com.soueidan.games.engine.managers.ServerManager;
+	import com.soueidan.games.engine.net.Server;
 	
 	public class ServerResponseHandler
 	{
-		protected var _server:Connector = ConnectManager.getInstance();
+		protected var _server:Server = ServerManager.getInstance();
 		private var _action:String;
 		
 		public function get action():String

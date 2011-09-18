@@ -2,64 +2,33 @@ package com.soueidan.games.lobby.core
 {
 	import com.smartfoxserver.v2.core.SFSEvent;
 	import com.smartfoxserver.v2.entities.data.*;
-	import com.smartfoxserver.v2.entities.invitation.InvitationReply;
-	import com.smartfoxserver.v2.requests.ExtensionRequest;
+	import com.soueidan.games.engine.components.popups.PopUpWindow;
+	import com.soueidan.games.engine.core.EngineApplication;
+	import com.soueidan.games.engine.managers.ServerManager;
+	import com.soueidan.games.engine.net.Server;
 	import com.soueidan.games.lobby.components.*;
-	import com.soueidan.games.lobby.components.popups.BanPopUpWindow;
-	import com.soueidan.games.lobby.components.popups.ConnectionLostPopUpWindow;
-	import com.soueidan.games.lobby.components.popups.KickPopUpWindow;
-	import com.soueidan.games.lobby.components.popups.NoConnectionPopUpWindow;
-	import com.soueidan.games.lobby.components.popups.PopUpWindow;
+	import com.soueidan.games.lobby.components.popups.*;
 	import com.soueidan.games.lobby.events.*;
 	import com.soueidan.games.lobby.managers.*;
-	import com.soueidan.games.lobby.responses.CreateGameResponse;
 	
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import flash.utils.Timer;
-	import flash.utils.setInterval;
-	
-	import mx.managers.PopUpManager;
 	
 	import spark.components.*;
 	import spark.events.*;
 
 	[ResourceBundle("resources")] 
-	public class App extends Application
+	public class App extends EngineApplication
 	{
 		private var _entrance:Entrance;
 		
-		private var _server:Connector;
-		private var _parameters:Object;
+		private var _server:Server;
 		
 		private var _urlLoader:URLLoader;
 		
-		public function App():void {
-			super();
-			
-			ApplicationManager.setInstance(this);
-		}
-		
 		override protected function createChildren():void {
 			super.createChildren();
-			
-			_parameters = systemManager.loaderInfo.parameters	
-				
-			if ( _parameters.language == "ar" ) {
-				resourceManager.localeChain = ['ar'];
-			} else {
-				resourceManager.localeChain = ['en_US'];
-			}
-			
-			var path:String = "";
-			if ( _parameters.debug != "true") {
-				path = "/";
-			}
-			
-			styleManager.loadStyleDeclarations(path + "assets/styles/" + ResourceManager.locale + ".swf", true, true);
-			
-			layoutDirection = resourceManager.getString('resources','direction');
 				
 			if ( !_entrance ) {
 				_entrance = new Entrance();
@@ -76,22 +45,12 @@ package com.soueidan.games.lobby.core
 		private function configurationFileReady(event:Event):void
 		{
 			trace("setup configuration");
-			_server = ConnectManager.getInstance();
+			_server = ServerManager.getInstance();
 			_server.parameters = _parameters;
 			_server.addEventListener(SFSEvent.LOGIN_ERROR, loginError);
 			_server.addEventListener(SFSEvent.CONNECTION_LOST, lostConnection);
-			_server.addEventListener(SFSEvent.CONNECTION, connection);
 			_server.addEventListener(SFSEvent.ROOM_JOIN, roomJoined);
 			_server.start(_urlLoader.data);
-		}
-		
-		protected function connection(event:SFSEvent):void
-		{
-			if ( !event.params.success ) {
-				var popup:PopUpWindow = new NoConnectionPopUpWindow();
-				popup.show();
-			}
-			
 		}
 		
 		protected function loginError(event:SFSEvent):void
@@ -117,10 +76,10 @@ package com.soueidan.games.lobby.core
 			var popup:PopUpWindow;
 			if ( params.reason == "kick") {
 				popup = new KickPopUpWindow();
-			} else if ( params.reason == "ban" ) {
+			}
+			
+			if ( params.reason == "ban" ) {
 				popup = new BanPopUpWindow();
-			} else {
-				popup = new ConnectionLostPopUpWindow();
 			}
 			
 			popup.show();

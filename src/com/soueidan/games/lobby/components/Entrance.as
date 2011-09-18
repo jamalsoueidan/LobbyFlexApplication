@@ -1,22 +1,17 @@
 package com.soueidan.games.lobby.components
 {
 	import com.smartfoxserver.v2.entities.SFSUser;
+	import com.soueidan.games.engine.managers.ResourceManager;
+	import com.soueidan.games.engine.managers.ServerManager;
 	import com.soueidan.games.lobby.components.users.UserProfile;
 	import com.soueidan.games.lobby.core.*;
 	import com.soueidan.games.lobby.core.invite.InviteHandler;
 	import com.soueidan.games.lobby.interfaces.ITab;
 	import com.soueidan.games.lobby.managers.*;
 	
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	
-	import mx.collections.ArrayCollection;
-	import mx.controls.Spacer;
 	import mx.events.FlexEvent;
 	
 	import spark.components.*;
-	import spark.events.IndexChangeEvent;
-	import spark.layouts.VerticalLayout;
 
 	public class Entrance extends VGroup
 	{	
@@ -29,7 +24,7 @@ package com.soueidan.games.lobby.components
 		private var _userList:UserList;
 		
 		private var _roomList:ITab;
-		private var _chatList:ITab;
+		private var _chatList:Chat;
 		
 		private var _inviteHandler:InviteHandler;
 		private var _autoPlayHandler:AutoPlayHandler;
@@ -60,7 +55,7 @@ package com.soueidan.games.lobby.components
 			if ( !_userProfile ) {
 				_userProfile = new UserProfile();
 				_userProfile.percentWidth = 30;
-				_userProfile.user = ConnectManager.getInstance().mySelf as SFSUser;
+				_userProfile.user = ServerManager.getInstance().mySelf as SFSUser;
 				_top.addElement(_userProfile);
 			}
 			

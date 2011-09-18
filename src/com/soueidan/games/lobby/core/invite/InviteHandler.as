@@ -4,9 +4,11 @@ package com.soueidan.games.lobby.core.invite
 	import com.smartfoxserver.v2.entities.SFSUser;
 	import com.smartfoxserver.v2.entities.data.*;
 	import com.smartfoxserver.v2.entities.invitation.InvitationReply;
+	import com.soueidan.games.engine.managers.ServerManager;
+	import com.soueidan.games.engine.managers.UserManager;
+	import com.soueidan.games.engine.net.Server;
 	import com.soueidan.games.lobby.components.*;
 	import com.soueidan.games.lobby.components.users.*;
-	import com.soueidan.games.lobby.core.Connector;
 	import com.soueidan.games.lobby.events.*;
 	import com.soueidan.games.lobby.managers.*;
 	import com.soueidan.games.lobby.requests.CreateGameRequest;
@@ -14,7 +16,7 @@ package com.soueidan.games.lobby.core.invite
 
 	public class InviteHandler
 	{
-		private var _server:Connector = ConnectManager.getInstance();
+		private var _server:Server = ServerManager.getInstance();
 		
 		private var _userList:UserList;
 		

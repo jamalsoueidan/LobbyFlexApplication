@@ -1,23 +1,19 @@
 package com.soueidan.games.lobby.core
 {
 	import com.smartfoxserver.v2.core.SFSEvent;
-	import com.smartfoxserver.v2.entities.SFSUser;
-	import com.smartfoxserver.v2.entities.data.ISFSArray;
 	import com.smartfoxserver.v2.entities.data.ISFSObject;
-	import com.smartfoxserver.v2.entities.data.SFSArray;
 	import com.smartfoxserver.v2.entities.data.SFSObject;
 	import com.smartfoxserver.v2.requests.IRequest;
+	import com.soueidan.games.engine.managers.ServerManager;
+	import com.soueidan.games.engine.net.Server;
 	import com.soueidan.games.lobby.components.popups.AutoPlayPopUpWindow;
-	import com.soueidan.games.lobby.managers.ConnectManager;
 	import com.soueidan.games.lobby.requests.FindPlayerRequest;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
-	import flash.utils.setInterval;
 	
 	import mx.events.CloseEvent;
-	import mx.events.DragEvent;
 	
 	import spark.components.Button;
 
@@ -25,7 +21,7 @@ package com.soueidan.games.lobby.core
 	{
 		private var _button:Button;
 		private var _autoPlayWindow:AutoPlayPopUpWindow;
-		private var _server:Connector = ConnectManager.getInstance();
+		private var _server:Server = ServerManager.getInstance();
 		
 		public function AutoPlayHandler(button:Button)
 		{

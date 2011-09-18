@@ -1,7 +1,7 @@
 package com.soueidan.games.lobby.components.invitations
 {
 	import com.smartfoxserver.v2.entities.SFSUser;
-	import com.soueidan.games.lobby.components.popups.PopUpWindow;
+	import com.soueidan.games.engine.components.popups.PopUpWindow;
 	import com.soueidan.games.lobby.components.users.UserVersus;
 	import com.soueidan.games.lobby.events.InviteEvent;
 	

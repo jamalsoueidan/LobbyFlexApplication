@@ -4,22 +4,22 @@ package com.soueidan.games.lobby.components
 	import com.smartfoxserver.v2.entities.SFSUser;
 	import com.smartfoxserver.v2.entities.User;
 	import com.smartfoxserver.v2.entities.variables.UserVariable;
+	import com.soueidan.games.engine.components.PanelContainer;
+	import com.soueidan.games.engine.managers.ResourceManager;
+	import com.soueidan.games.engine.managers.ServerManager;
+	import com.soueidan.games.engine.net.Server;
 	import com.soueidan.games.lobby.components.invitations.InvitationPopupWindow;
 	import com.soueidan.games.lobby.components.users.UserPlayer;
 	import com.soueidan.games.lobby.core.*;
-	import com.soueidan.games.lobby.events.InviteEvent;
 	import com.soueidan.games.lobby.managers.*;
 	
-	import flash.events.MouseEvent;
-	
 	import spark.components.*;
-	import spark.layouts.VerticalLayout;
 	
-	public class UserList extends TabContainer
+	public class UserList extends PanelContainer
 	{
 		private var _body:Label;
 		
-		private var _server:Connector = ConnectManager.getInstance();
+		private var _server:Server = ServerManager.getInstance();
 		
 		private var _list:Array = [];
 		private var _inviteRequest:InvitationPopupWindow;
