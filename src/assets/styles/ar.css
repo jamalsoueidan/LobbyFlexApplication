@@ -30,6 +30,10 @@ s|Panel s|Label#titleDisplay {
 	fontWeight:bold;
 }
 
+.toolTip {
+	fontFamily:fontBold;
+}
+
 #titleDisplay {
 	fontFamily:fontBold;
 }

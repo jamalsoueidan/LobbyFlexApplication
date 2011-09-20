@@ -25,6 +25,10 @@ s|Panel s|Label#titleDisplay {
 	fontFamily:fontBold;
 }
 
+.toolTip {
+	fontFamily:fontBold;
+}
+
 .nickname {
 	fontFamily:fontBold;
 	fontWeight:bold;
