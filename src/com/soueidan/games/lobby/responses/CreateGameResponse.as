@@ -2,6 +2,7 @@ package com.soueidan.games.lobby.responses
 {
 	import com.smartfoxserver.v2.core.SFSEvent;
 	import com.smartfoxserver.v2.entities.data.SFSObject;
+	import com.soueidan.games.engine.net.responses.ServerResponseHandler;
 	
 	import flash.external.ExternalInterface;
 
